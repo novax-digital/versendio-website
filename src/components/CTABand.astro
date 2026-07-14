@@ -1,0 +1,61 @@
+---
+import { SITE } from '../data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'Bereit? Ihr erster Brief ist in 5 Minuten unterwegs.',
+  text = 'Kostenlos registrieren, Guthaben aufladen, Brief versenden – ganz ohne Abo, Drucker oder Gang zur Post.',
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div class="cta-copy">
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-on-dark btn-lg" href={SITE.appRegister} rel="noopener">
+        Kostenlos starten
+      </a>
+      <a class="btn btn-outline-dark btn-lg" href="/preise">Preise ansehen</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    background:
+      radial-gradient(900px 400px at 85% -20%, rgba(255, 255, 255, 0.16), transparent 60%),
+      radial-gradient(700px 380px at 8% 115%, rgba(28, 51, 175, 0.75), transparent 62%),
+      linear-gradient(120deg, var(--blue) 0%, #2440cc 55%, var(--blue-deep) 100%);
+    padding: clamp(3.2rem, 3rem + 3vw, 5.5rem) 0;
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-copy {
+    max-width: 560px;
+  }
+  .cta-copy h2 {
+    color: #fff;
+    margin-bottom: 0.5em;
+  }
+  .cta-copy p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.12rem;
+    margin: 0;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+</style>

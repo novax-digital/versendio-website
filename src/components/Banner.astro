@@ -1,0 +1,101 @@
+---
+import Icon from './Icon.astro';
+import { BANNER } from '../data/site';
+---
+
+{
+  BANNER.enabled && (
+    <div class="banner" id="promo-banner" data-expires={BANNER.expires} hidden>
+      <div class="container banner-inner">
+        <p>
+          <span class="banner-emoji" aria-hidden="true">{BANNER.emoji}</span>
+          <strong>{BANNER.label}:</strong>
+          <span class="banner-text">{BANNER.text}</span>
+          <a href={BANNER.ctaHref} rel="noopener">{BANNER.ctaLabel}</a>
+        </p>
+        <button type="button" class="banner-close" aria-label="Banner schließen">
+          <Icon name="x" size={16} strokeWidth={2.4} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const banner = document.getElementById('promo-banner');
+  if (banner) {
+    const expires = banner.dataset.expires;
+    const dismissed = localStorage.getItem('versendio-banner-dismissed') === expires;
+    const expired = expires ? Date.now() > new Date(expires).getTime() : false;
+    if (!dismissed && !expired) banner.hidden = false;
+
+    banner.querySelector('.banner-close')?.addEventListener('click', () => {
+      banner.hidden = true;
+      if (expires) localStorage.setItem('versendio-banner-dismissed', expires);
+    });
+  }
+</script>
+
+<style>
+  .banner {
+    background: linear-gradient(100deg, var(--blue-deep) 0%, var(--blue) 60%, #4c66f0 100%);
+    color: #fff;
+    font-size: 0.94rem;
+  }
+  .banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-block: 0.6rem;
+    position: relative;
+  }
+  .banner p {
+    margin: 0;
+    text-align: center;
+    line-height: 1.45;
+  }
+  .banner-emoji {
+    margin-right: 0.4rem;
+  }
+  .banner strong {
+    color: #fff;
+    font-family: var(--font-head);
+    margin-right: 0.35rem;
+  }
+  .banner a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
+  .banner-close {
+    position: absolute;
+    right: clamp(0.4rem, 2vw, 1rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.14);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.35rem;
+    cursor: pointer;
+  }
+  .banner-close:hover {
+    background: rgba(255, 255, 255, 0.26);
+  }
+  @media (max-width: 640px) {
+    .banner {
+      font-size: 0.87rem;
+    }
+    .banner-inner {
+      padding-right: 2.6rem;
+    }
+    .banner p {
+      text-align: left;
+    }
+  }
+</style>

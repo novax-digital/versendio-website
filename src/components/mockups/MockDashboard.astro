@@ -1,0 +1,110 @@
+---
+import MockShell from './MockShell.astro';
+import Icon from '../Icon.astro';
+
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+---
+
+<MockShell active="uebersicht" class={cls}>
+  <p class="m-h1">Übersicht</p>
+  <p class="m-sub">Willkommen zurück!</p>
+
+  <div class="stats">
+    <div class="m-card stat">
+      <span class="stat-label"><Icon name="wallet" size={14} /> Guthaben</span>
+      <span class="stat-value">84,50 €</span>
+    </div>
+    <div class="m-card stat">
+      <span class="stat-label"><Icon name="mail" size={14} /> Versendete Briefe</span>
+      <span class="stat-value">1.284</span>
+    </div>
+    <div class="m-card stat">
+      <span class="stat-label"><Icon name="clock" size={14} /> Briefe in Bearbeitung</span>
+      <span class="stat-value">12</span>
+    </div>
+  </div>
+
+  <div class="m-card recent">
+    <p class="recent-title">Letzte Sendungen</p>
+    <div class="row">
+      <span>Rechnung #2043 · Muster GmbH</span>
+      <span class="m-badge ok"><Icon name="check" size={10} strokeWidth={3} /> Zugestellt</span>
+    </div>
+    <div class="row">
+      <span>Serienbrief Kundeninfo · 248 Empfänger</span>
+      <span class="m-badge info">Im Versand</span>
+    </div>
+    <div class="row">
+      <span>Angebot Frühjahrsaktion · Weber & Söhne</span>
+      <span class="m-badge warn">Im Druck</span>
+    </div>
+    <div class="row">
+      <span>Mahnung #1188 · TechNova UG</span>
+      <span class="m-badge ok"><Icon name="check" size={10} strokeWidth={3} /> Zugestellt</span>
+    </div>
+  </div>
+</MockShell>
+
+<style>
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    margin-bottom: 1.2em;
+  }
+  .stat {
+    padding: 1.1em 1.2em;
+  }
+  .stat-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.9em;
+    color: var(--slate-500);
+  }
+  .stat-label :global(svg) {
+    width: 1.2em;
+    height: 1.2em;
+  }
+  .stat-value {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.7em;
+    color: var(--ink);
+    margin-top: 0.35em;
+    letter-spacing: -0.01em;
+  }
+
+  .recent {
+    padding: 1.1em 1.2em 0.6em;
+  }
+  .recent-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.05em;
+    color: var(--ink);
+    margin: 0 0 0.6em;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 0.7em 0;
+    border-top: 1px solid var(--slate-100);
+    font-size: 0.95em;
+  }
+  .row > span:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .m-badge :global(svg) {
+    width: 1em;
+    height: 1em;
+  }
+</style>

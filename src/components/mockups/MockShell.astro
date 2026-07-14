@@ -1,0 +1,294 @@
+---
+import Icon from '../Icon.astro';
+import type { IconName } from '../Icon.astro';
+
+/**
+ * Browser-Fenster + App-Chrome (Sidebar, Topbar) als skalierbares
+ * HTML/CSS-Mockup. Skaliert über Container-Queries (alles in em).
+ */
+interface Props {
+  active?: string;
+  showSidebar?: boolean;
+  balance?: string;
+  class?: string;
+}
+const {
+  active = 'uebersicht',
+  showSidebar = true,
+  balance = '84,50 €',
+  class: cls,
+} = Astro.props;
+
+const nav: { key: string; label: string; icon: IconName }[] = [
+  { key: 'uebersicht', label: 'Übersicht', icon: 'layout' },
+  { key: 'briefe', label: 'Briefe', icon: 'file-text' },
+  { key: 'kontakte', label: 'Kontakte', icon: 'users' },
+  { key: 'sendungen', label: 'Sendungen', icon: 'clock' },
+  { key: 'guthaben', label: 'Guthaben', icon: 'wallet' },
+  { key: 'einstellungen', label: 'Einstellungen', icon: 'sliders' },
+];
+---
+
+<div class:list={['mock-root', cls]} role="img" aria-label="Vorschau der versendio App">
+  <div class="browser">
+    <div class="browser-bar">
+      <span class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></span>
+      <span class="url"><Icon name="lock" size={11} strokeWidth={2.2} /> app.versendio.de</span>
+      <span class="bar-spacer"></span>
+    </div>
+
+    <div class="app">
+      {
+        showSidebar && (
+          <aside class="side">
+            <span class="side-logo">
+              <svg viewBox="0 0 100 100" width="22" height="22" aria-hidden="true">
+                <g transform="rotate(-8 51 50)">
+                  <path d="M92 50 10 12l22 33.6z" fill="#2C4BE8" />
+                  <path d="M92 50 10 88l22-33.6z" fill="#1C33AF" />
+                </g>
+              </svg>
+              versendio
+            </span>
+            <nav>
+              {nav.map((item) => (
+                <span class:list={['side-item', { on: item.key === active }]}>
+                  <Icon name={item.icon} size={15} strokeWidth={1.9} />
+                  {item.label}
+                </span>
+              ))}
+            </nav>
+          </aside>
+        )
+      }
+
+      <div class="main">
+        <div class="top">
+          <span class="top-balance"><Icon name="wallet" size={13} strokeWidth={2} /> {balance}</span>
+          <span class="avatar">A</span>
+        </div>
+        <div class="body">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mock-root {
+    container-type: inline-size;
+    width: 100%;
+  }
+
+  .browser {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.06),
+      0 24px 60px -18px rgba(16, 24, 40, 0.28);
+    overflow: hidden;
+  }
+
+  /* Browser-Leiste */
+  .browser-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.6em 1em;
+    background: #f2f4f9;
+    border-bottom: 1px solid var(--slate-200);
+    font-size: clamp(7px, 1.35cqw, 12.5px);
+  }
+  .dots {
+    display: flex;
+    gap: 0.5em;
+  }
+  .dots i {
+    width: 0.85em;
+    height: 0.85em;
+    border-radius: 50%;
+  }
+  .d1 { background: #fc5f57; }
+  .d2 { background: #febc2e; }
+  .d3 { background: #28c840; }
+  .url {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 999px;
+    padding: 0.38em 1.1em;
+    color: var(--slate-500);
+    font-family: var(--font-head);
+    font-size: 0.95em;
+  }
+
+  /* App-Layout */
+  .app {
+    display: flex;
+    font-size: clamp(7px, 1.42cqw, 13.5px);
+    font-family: var(--font-body);
+    color: var(--slate-700);
+    background: #fbfcfe;
+    min-height: 30em;
+  }
+
+  .side {
+    flex: 0 0 13.5em;
+    background: #fff;
+    border-right: 1px solid var(--slate-100);
+    padding: 1.1em 0.9em;
+  }
+  .side-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.2em;
+    color: var(--ink);
+    padding: 0.2em 0.5em 1em;
+  }
+  .side-logo svg {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .side nav {
+    display: grid;
+    gap: 0.25em;
+  }
+  .side-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0.6em 0.75em;
+    border-radius: 0.6em;
+    border: 1px solid transparent;
+    color: var(--slate-600);
+    font-size: 0.98em;
+  }
+  .side-item :global(svg) {
+    width: 1.15em;
+    height: 1.15em;
+    color: var(--slate-400);
+  }
+  .side-item.on {
+    background: var(--blue-050);
+    border-color: var(--blue-100);
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .side-item.on :global(svg) {
+    color: var(--blue);
+  }
+
+  .main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.9em;
+    padding: 0.65em 1.4em;
+    background: #fff;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .top-balance {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-size: 0.95em;
+    color: var(--slate-600);
+  }
+  .top-balance :global(svg) {
+    width: 1.1em;
+    height: 1.1em;
+  }
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background: var(--slate-100);
+    color: var(--slate-600);
+    font-size: 0.9em;
+    font-weight: 700;
+    font-family: var(--font-head);
+  }
+
+  .body {
+    flex: 1;
+    padding: 1.6em 1.8em 1.8em;
+  }
+
+  /* ---- Gemeinsame Bausteine für Mock-Inhalte ---- */
+  .body :global(.m-h1) {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.65em;
+    color: var(--ink);
+    margin: 0 0 0.15em;
+    letter-spacing: -0.01em;
+  }
+  .body :global(.m-sub) {
+    color: var(--slate-500);
+    font-size: 0.98em;
+    margin: 0 0 1.4em;
+  }
+  .body :global(.m-card) {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 0.9em;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  }
+  .body :global(.m-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.92em;
+    padding: 0.55em 1em;
+    border-radius: 0.6em;
+    white-space: nowrap;
+  }
+  .body :global(.m-btn.pri) {
+    background: var(--blue);
+    color: #fff;
+  }
+  .body :global(.m-btn.sec) {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--slate-300);
+  }
+  .body :global(.m-badge) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-size: 0.8em;
+    font-weight: 700;
+    padding: 0.28em 0.75em;
+    border-radius: 999px;
+  }
+  .body :global(.m-badge.ok) {
+    background: var(--green-050);
+    color: var(--green-600);
+  }
+  .body :global(.m-badge.info) {
+    background: var(--blue-050);
+    color: var(--blue);
+  }
+  .body :global(.m-badge.warn) {
+    background: var(--amber-050);
+    color: var(--amber-600);
+  }
+</style>

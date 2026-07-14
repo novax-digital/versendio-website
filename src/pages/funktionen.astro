@@ -1,0 +1,367 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import CTABand from '../components/CTABand.astro';
+import MockEditor from '../components/mockups/MockEditor.astro';
+import MockContacts from '../components/mockups/MockContacts.astro';
+import MockCredit from '../components/mockups/MockCredit.astro';
+import MockDashboard from '../components/mockups/MockDashboard.astro';
+import { SITE } from '../data/site';
+
+const title = 'Funktionen: Brief-Editor, Leadlisten-Import, API & mehr | versendio';
+const description =
+  'Alle versendio-Funktionen im Überblick: Brief-Editor mit KI-Entwurf, PDF-Upload, CSV/Excel-Import für Leadlisten, Serienbriefe, Sendungsverfolgung, Prepaid-Guthaben & API.';
+
+const breadcrumbLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Funktionen', item: `${SITE.url}/funktionen` },
+  ],
+};
+
+const shipping = [
+  {
+    icon: 'mail',
+    title: 'Briefarten',
+    text: 'Standardbrief bis Maxibrief, national und international – auf Wunsch als Einschreiben (Einwurf oder Übergabe).',
+  },
+  {
+    icon: 'printer',
+    title: 'Druckoptionen',
+    text: 'Graustufen oder Farbe, einseitig oder Duplex – professionell gedruckt und maschinell kuvertiert.',
+  },
+  {
+    icon: 'clock',
+    title: 'Sendungsstatus',
+    text: 'Vom Druck bis zur Übergabe an die Zustellung: Der Status jeder Sendung ist live im Dashboard sichtbar.',
+  },
+  {
+    icon: 'globe',
+    title: 'Weltweiter Versand',
+    text: 'Empfänger im Ausland? versendio verschickt Ihre Briefe auch international – ohne Zusatzaufwand.',
+  },
+] as const;
+
+const security = [
+  {
+    icon: 'lock',
+    title: 'Verschlüsselte Übertragung',
+    text: 'Alle Daten werden ausschließlich SSL/TLS-verschlüsselt übertragen.',
+  },
+  {
+    icon: 'shield',
+    title: 'DSGVO-konform',
+    text: 'Verarbeitung nach europäischem Datenschutzrecht – inklusive Vereinbarung zur Auftragsverarbeitung für Geschäftskunden.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Nachvollziehbare Belege',
+    text: 'Jede Aufladung und jede Sendung ist dokumentiert – ideal für Buchhaltung und Compliance.',
+  },
+] as const;
+
+const featureTable = [
+  {
+    group: 'Brief erstellen',
+    rows: [
+      ['Brief-Editor', 'Geschäftsbriefe direkt im Browser erstellen – mit korrektem Adressfeld und Layout'],
+      ['KI-Entwurf', 'Aus Stichworten einen fertigen Brieftext generieren lassen'],
+      ['PDF-Upload', 'Fertige Dokumente hochladen und ohne Umwege versenden'],
+      ['Platzhalter', 'Anrede, Name, Firma & mehr – automatisch je Empfänger personalisiert'],
+      ['Briefpapier', 'Logo, Schriften, Kopf- und Fußbereich als Vorlage speichern'],
+      ['Versand-Vorschau', 'Brief vor dem Versand als PDF prüfen'],
+    ],
+  },
+  {
+    group: 'Empfänger verwalten',
+    rows: [
+      ['Adressbuch', 'Kontakte zentral anlegen, suchen und pflegen'],
+      ['CSV/Excel-Import', 'Leadlisten und Adressbestände in Sekunden importieren'],
+      ['Kontaktlisten', 'Empfängergruppen für wiederkehrende Mailings'],
+      ['Serienbriefe', 'Einen Brief an hunderte Empfänger gleichzeitig senden'],
+    ],
+  },
+  {
+    group: 'Versand & Kosten',
+    rows: [
+      ['Briefarten', 'Standardbrief bis Maxibrief, Einschreiben, internationaler Versand'],
+      ['Sendungsverfolgung', 'Status jeder Sendung live im Dashboard'],
+      ['Prepaid-Guthaben', 'Aufladen per Karte oder SEPA – bezahlt wird nur der tatsächliche Versand'],
+      ['Automatische Aufladung', 'Guthaben lädt sich bei Unterschreiten eines Schwellwerts selbst nach'],
+      ['Transaktionen & Belege', 'Lückenlose Übersicht für Ihre Buchhaltung'],
+      ['API-Anbindung', 'Briefversand aus eigenen Systemen automatisieren'],
+    ],
+  },
+] as const;
+---
+
+<BaseLayout title={title} description={description} jsonLd={[breadcrumbLd]}>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHead
+        as="h1"
+        eyebrow="Funktionen"
+        title="Alles für den Briefversand – <em>an einem Ort</em>"
+        lead="versendio bündelt den kompletten Weg der Geschäftspost: erstellen, personalisieren, versenden, verfolgen und abrechnen. Das sind die Funktionen im Detail."
+      />
+      <div class="hero-mock">
+        <MockDashboard />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="editor">
+    <div class="container feature-stack">
+      <FeatureSplit
+        eyebrow="Brief-Editor"
+        title="Briefe schreiben wie mit einem guten Sekretariat"
+        text="Der Editor nimmt Ihnen die Formalien ab: Adressfeld an der richtigen Position, sauberes Layout, automatisches Datum. Inhalte bauen Sie aus flexiblen Bausteinen zusammen – oder Sie starten mit einem KI-Entwurf."
+        bullets={[
+          '<strong>Bausteine:</strong> Betreff, Überschriften, Textabsätze, Bilder, Trennlinien und Abstände',
+          '<strong>KI-Entwurf:</strong> Beschreiben Sie kurz das Anliegen, die KI formuliert den Brief',
+          '<strong>Platzhalter:</strong> {Anrede}, {Vorname}, {Nachname}, {Firma}, {Ort} u. v. m.',
+          '<strong>Briefpapier:</strong> Corporate Design einmal hinterlegen, für alle Briefe nutzen',
+          '<strong>Versand-Vorschau:</strong> Das finale PDF vor dem Versand prüfen',
+        ]}
+      >
+        <MockEditor />
+      </FeatureSplit>
+
+      <FeatureSplit
+        reverse
+        eyebrow="Kontakte & Leadlisten"
+        title="Vom Excel-Export zur fertigen Kampagne"
+        text="Ihre Empfänger leben in Excel, im CRM oder im Kopf? Mit dem Import sind sie in Sekunden in versendio – sauber strukturiert, durchsuchbar und bereit für den nächsten Serienbrief."
+        bullets={[
+          '<strong>CSV/Excel-Import</strong> mit Zuordnung von Name, Firma, Adresse und Anrede',
+          '<strong>Adressbuch</strong> mit Suche nach Name, Firma oder Ort',
+          '<strong>Kontaktlisten</strong> für Zielgruppen, Regionen oder Kampagnen',
+          '<strong>Einzeln oder in Serie:</strong> ein Empfänger oder die ganze Liste',
+        ]}
+      >
+        <MockContacts />
+      </FeatureSplit>
+    </div>
+  </section>
+
+  <span id="kontakte" class="anchor" aria-hidden="true"></span>
+
+  <section class="section section-soft" id="versand">
+    <div class="container">
+      <SectionHead
+        eyebrow="Versand & Zustellung"
+        title="Gedruckt, kuvertiert, zugestellt – <em>ohne Ihr Zutun</em>"
+        lead="Nach dem Klick auf „Versenden“ übernimmt versendio: professioneller Druck, maschinelle Kuvertierung, Frankierung und Übergabe an die Zustellung."
+      />
+      <div class="icon-grid">
+        {
+          shipping.map((f) => (
+            <div class="icon-card card">
+              <span class="ic"><Icon name={f.icon} size={22} /></span>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guthaben">
+    <div class="container feature-stack">
+      <FeatureSplit
+        eyebrow="Guthaben & Abrechnung"
+        title="Ihre Portokasse in der Cloud"
+        text="Guthaben aufladen, versenden, fertig. Jede Transaktion ist dokumentiert, jede Aufladung kommt mit Beleg – und die automatische Aufladung sorgt dafür, dass wichtige Post nie am Guthaben scheitert."
+        bullets={[
+          '<strong>Prepaid-Modell:</strong> volle Kostenkontrolle, keine Überraschungen',
+          '<strong>Aufladen per Karte oder SEPA</strong> – sicher abgewickelt über Stripe',
+          '<strong>Automatische Aufladung</strong> mit frei wählbarem Schwellwert und Betrag',
+          '<strong>Netto-Preise</strong> mit sauber ausgewiesener Umsatzsteuer',
+        ]}
+        linkHref="/preise"
+        linkLabel="Zu den Preisen"
+      >
+        <MockCredit />
+      </FeatureSplit>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="sicherheit">
+    <div class="container">
+      <SectionHead
+        eyebrow="Sicherheit & Datenschutz"
+        title="Geschäftspost verdient <em>Vertrauen</em>"
+        lead="Briefe enthalten sensible Daten. Entsprechend sorgfältig behandelt versendio jede Sendung – technisch und organisatorisch."
+      />
+      <div class="icon-grid three">
+        {
+          security.map((f) => (
+            <div class="icon-card card">
+              <span class="ic"><Icon name={f.icon} size={22} /></span>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="uebersicht">
+    <div class="container-narrow">
+      <SectionHead
+        eyebrow="Überblick"
+        title="Alle Funktionen auf einen Blick"
+      />
+      <div class="feature-table card">
+        {
+          featureTable.map((group) => (
+            <div class="ft-group">
+              <h3>{group.group}</h3>
+              <dl>
+                {group.rows.map(([name, desc]) => (
+                  <div class="ft-row">
+                    <dt>
+                      <Icon name="check" size={16} strokeWidth={2.6} />
+                      {name}
+                    </dt>
+                    <dd>{desc}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTABand
+    title="Überzeugen Sie sich selbst – kostenlos."
+    text="Registrieren Sie sich unverbindlich und sehen Sie sich in Ruhe um. Bezahlt wird erst, wenn Sie wirklich etwas versenden."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: clamp(3rem, 2rem + 3vw, 5rem) 0 0;
+    background:
+      radial-gradient(700px 420px at 50% -20%, var(--blue-050) 0%, transparent 65%),
+      linear-gradient(180deg, #fdfdff 0%, #ffffff 100%);
+  }
+  .hero-mock {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .anchor {
+    display: block;
+    position: relative;
+    top: calc(-1 * var(--header-h));
+  }
+
+  .feature-stack {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+  }
+  .icon-grid.three {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 980px;
+    margin-inline: auto;
+  }
+  .icon-card {
+    padding: 1.7rem 1.5rem 1.5rem;
+  }
+  .ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 11px;
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .icon-card h3 {
+    font-size: 1.08rem;
+    margin-bottom: 0.35rem;
+  }
+  .icon-card p {
+    font-size: 0.96rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  @media (max-width: 980px) {
+    .icon-grid { grid-template-columns: repeat(2, 1fr); }
+    .icon-grid.three { grid-template-columns: 1fr; max-width: 560px; }
+  }
+  @media (max-width: 560px) {
+    .icon-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Feature-Tabelle */
+  .feature-table {
+    padding: clamp(1.4rem, 1rem + 2vw, 2.6rem);
+  }
+  .ft-group + .ft-group {
+    margin-top: 2.2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--slate-100);
+  }
+  .ft-group h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--blue);
+    margin-bottom: 1.1rem;
+  }
+  .ft-group dl {
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .ft-row {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 0.4rem 1.5rem;
+    align-items: baseline;
+  }
+  .ft-row dt {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.99rem;
+  }
+  .ft-row dt :global(svg) {
+    color: var(--green-600);
+    flex-shrink: 0;
+  }
+  .ft-row dd {
+    margin: 0;
+    color: var(--slate-600);
+    font-size: 0.97rem;
+  }
+  @media (max-width: 640px) {
+    .ft-row {
+      grid-template-columns: 1fr;
+    }
+    .ft-row dd {
+      padding-left: 1.6rem;
+    }
+  }
+</style>

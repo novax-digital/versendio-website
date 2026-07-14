@@ -1,0 +1,184 @@
+---
+import MockShell from './MockShell.astro';
+import Icon from '../Icon.astro';
+
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+---
+
+<MockShell active="guthaben" class={cls}>
+  <p class="m-h1">Guthaben</p>
+  <p class="m-sub">Ihr Prepaid-Guthaben für den Briefversand.</p>
+
+  <div class="grid">
+    <div class="m-card balance">
+      <span class="label"><Icon name="wallet" size={14} /> Aktuelles Guthaben</span>
+      <span class="value">84,50 €</span>
+      <span class="hint">Reicht für ca. 70 Standardbriefe</span>
+    </div>
+
+    <div class="m-card topup">
+      <p class="card-title">Guthaben aufladen</p>
+      <div class="amounts">
+        <span class="amount">10 €</span>
+        <span class="amount on">25 €</span>
+        <span class="amount">50 €</span>
+        <span class="amount">100 €</span>
+      </div>
+      <span class="m-btn pri full">Zur Bezahlung</span>
+    </div>
+  </div>
+
+  <div class="m-card auto">
+    <div>
+      <p class="card-title">Automatische Aufladung</p>
+      <p class="auto-sub">Fällt das Guthaben unter 10 €, laden wir automatisch 50 € nach.</p>
+    </div>
+    <span class="toggle" aria-hidden="true"></span>
+  </div>
+
+  <div class="m-card tx">
+    <p class="card-title">Transaktionen</p>
+    <div class="row">
+      <span>Aufladung per Kreditkarte</span>
+      <span class="plus">+50,00 €</span>
+    </div>
+    <div class="row">
+      <span>Serienbrief Kundeninfo · 248 Briefe</span>
+      <span class="minus">−369,52 €</span>
+    </div>
+    <div class="row">
+      <span>Rechnung #2043 · 2 Seiten</span>
+      <span class="minus">−1,34 €</span>
+    </div>
+  </div>
+</MockShell>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 1em;
+    margin-bottom: 1em;
+  }
+  .balance {
+    padding: 1.2em 1.3em;
+    display: flex;
+    flex-direction: column;
+  }
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.9em;
+    color: var(--slate-500);
+  }
+  .label :global(svg) {
+    width: 1.2em;
+    height: 1.2em;
+  }
+  .value {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 2.1em;
+    color: var(--ink);
+    margin-top: 0.3em;
+    letter-spacing: -0.01em;
+  }
+  .hint {
+    margin-top: auto;
+    font-size: 0.85em;
+    color: var(--slate-400);
+  }
+
+  .topup {
+    padding: 1.2em 1.3em;
+  }
+  .card-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.02em;
+    color: var(--ink);
+    margin: 0 0 0.7em;
+  }
+  .amounts {
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 0.9em;
+  }
+  .amount {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.9em;
+    padding: 0.45em 0.9em;
+    border-radius: 0.55em;
+    border: 1px solid var(--slate-200);
+    color: var(--slate-600);
+  }
+  .amount.on {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+  .full {
+    justify-content: center;
+    display: flex;
+  }
+
+  .auto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 1.3em;
+    margin-bottom: 1em;
+  }
+  .auto .card-title {
+    margin-bottom: 0.15em;
+  }
+  .auto-sub {
+    font-size: 0.88em;
+    color: var(--slate-500);
+    margin: 0;
+  }
+  .toggle {
+    flex-shrink: 0;
+    width: 2.6em;
+    height: 1.45em;
+    border-radius: 999px;
+    background: var(--blue);
+    position: relative;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 0.16em;
+    right: 0.16em;
+    width: 1.12em;
+    height: 1.12em;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .tx {
+    padding: 1em 1.3em 0.5em;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    padding: 0.6em 0;
+    border-top: 1px solid var(--slate-100);
+    font-size: 0.93em;
+  }
+  .plus {
+    color: var(--green-600);
+    font-weight: 700;
+  }
+  .minus {
+    color: var(--slate-600);
+    font-weight: 700;
+  }
+</style>

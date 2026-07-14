@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://versendio.de/sitemap-index.xml

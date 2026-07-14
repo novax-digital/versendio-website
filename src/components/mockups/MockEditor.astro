@@ -1,0 +1,404 @@
+---
+import Icon from '../Icon.astro';
+
+/**
+ * Mockup des Brief-Editors (ohne Sidebar): Toolbar, Platzhalter-Chips,
+ * A4-Blatt und Baustein-Panel – rein in HTML/CSS.
+ */
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+
+const placeholders = ['Anrede', 'Vorname', 'Nachname', 'Firma', 'Straße', 'PLZ', 'Ort'];
+const blocks: { label: string; icon: any }[] = [
+  { label: 'Betreff', icon: 'list' },
+  { label: 'Überschrift', icon: 'pen' },
+  { label: 'Textabsatz', icon: 'file-text' },
+  { label: 'Bild', icon: 'layout' },
+];
+---
+
+<div class:list={['mock-root', cls]} role="img" aria-label="Vorschau des versendio Brief-Editors">
+  <div class="browser">
+    <div class="browser-bar">
+      <span class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></span>
+      <span class="url"><Icon name="lock" size={11} strokeWidth={2.2} /> app.versendio.de</span>
+      <span></span>
+    </div>
+
+    <div class="editor">
+      <div class="toolbar">
+        <span class="crumb">Briefe / <b>Angebot Frühjahr 2026</b></span>
+        <span class="tools">
+          <span class="m-btn sec"><Icon name="sparkles" size={13} /> KI-Entwurf</span>
+          <span class="m-btn pri">Weiter</span>
+        </span>
+      </div>
+
+      <div class="workspace">
+        <div class="canvas">
+          <div class="chips">
+            <span class="chips-label">Platzhalter:</span>
+            {placeholders.map((p) => <span class="chip">{'{}'} {p}</span>)}
+          </div>
+
+          <div class="sheet">
+            <p class="sender">Testfirma · Eschenweg 1 · 30655 Hannover</p>
+            <div class="addr">
+              <span>Muster GmbH</span>
+              <span>Frau <i class="ph">{'{{Anrede}}'}</i> <i class="ph">{'{{Nachname}}'}</i></span>
+              <span>Musterstraße 12</span>
+              <span>10115 Berlin</span>
+            </div>
+            <p class="date">Hannover, 14.07.2026</p>
+            <p class="subject">Ihr individuelles Angebot – Frühjahr 2026</p>
+            <p class="text">
+              Sehr geehrte <i class="ph">{'{{Anrede}}'}</i> <i class="ph">{'{{Nachname}}'}</i>,
+            </p>
+            <p class="text">
+              vielen Dank für Ihr Interesse. Gerne senden wir Ihnen unser aktuelles Angebot –
+              individuell für <i class="ph">{'{{Firma}}'}</i> zusammengestellt:
+            </p>
+            <span class="skel w90"></span>
+            <span class="skel w75"></span>
+            <span class="skel w85"></span>
+            <span class="skel w40"></span>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <p class="panel-title">Baustein hinzufügen</p>
+          <div class="block-grid">
+            {
+              blocks.map((b) => (
+                <span class="block">
+                  <Icon name={b.icon} size={12} /> {b.label}
+                </span>
+              ))
+            }
+          </div>
+
+          <p class="panel-title">Versand</p>
+          <div class="field">
+            <span class="field-label">Absenderadresse</span>
+            <span class="select">
+              Testfirma <Icon name="chevron-down" size={11} />
+            </span>
+          </div>
+          <div class="field row">
+            <span class="field-label">Datum anzeigen</span>
+            <span class="toggle"></span>
+          </div>
+          <div class="pages"><Icon name="file-text" size={12} /> ca. 1 Seite · 1 Blatt</div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mock-root {
+    container-type: inline-size;
+    width: 100%;
+  }
+  .browser {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.06),
+      0 24px 60px -18px rgba(16, 24, 40, 0.28);
+    overflow: hidden;
+  }
+  .browser-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.6em 1em;
+    background: #f2f4f9;
+    border-bottom: 1px solid var(--slate-200);
+    font-size: clamp(7px, 1.35cqw, 12.5px);
+  }
+  .dots {
+    display: flex;
+    gap: 0.5em;
+  }
+  .dots i {
+    width: 0.85em;
+    height: 0.85em;
+    border-radius: 50%;
+  }
+  .d1 { background: #fc5f57; }
+  .d2 { background: #febc2e; }
+  .d3 { background: #28c840; }
+  .url {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 999px;
+    padding: 0.38em 1.1em;
+    color: var(--slate-500);
+    font-family: var(--font-head);
+    font-size: 0.95em;
+  }
+
+  .editor {
+    font-size: clamp(7px, 1.6cqw, 13px);
+    font-family: var(--font-body);
+    background: #fbfcfe;
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 0.8em 1.4em;
+    background: #fff;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .crumb {
+    font-size: 0.95em;
+    color: var(--slate-500);
+  }
+  .crumb b {
+    color: var(--ink);
+    font-family: var(--font-head);
+    font-weight: 600;
+  }
+  .tools {
+    display: flex;
+    gap: 0.6em;
+  }
+  .m-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.92em;
+    padding: 0.5em 1em;
+    border-radius: 0.6em;
+    white-space: nowrap;
+  }
+  .m-btn.pri {
+    background: var(--blue);
+    color: #fff;
+  }
+  .m-btn.sec {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--slate-300);
+  }
+  .m-btn :global(svg) {
+    width: 1.05em;
+    height: 1.05em;
+    color: var(--blue);
+  }
+  .m-btn.pri :global(svg) {
+    color: #fff;
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 1.2em;
+    padding: 1.2em 1.4em 1.5em;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4em;
+    margin-bottom: 1em;
+  }
+  .chips-label {
+    font-size: 0.85em;
+    color: var(--slate-500);
+    margin-right: 0.2em;
+  }
+  .chip {
+    font-size: 0.78em;
+    font-weight: 700;
+    color: var(--blue-deep);
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    border-radius: 999px;
+    padding: 0.25em 0.8em;
+    white-space: nowrap;
+  }
+
+  .sheet {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 0.4em;
+    box-shadow: 0 10px 28px -12px rgba(16, 24, 40, 0.18);
+    padding: 2em 2.2em;
+    min-height: 26em;
+  }
+  .sender {
+    font-size: 0.62em;
+    color: var(--slate-400);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    margin: 0 0 1.6em;
+  }
+  .addr {
+    display: grid;
+    gap: 0.15em;
+    font-size: 0.82em;
+    color: var(--slate-700);
+    margin-bottom: 1.4em;
+  }
+  .date {
+    text-align: right;
+    font-size: 0.78em;
+    color: var(--slate-500);
+    margin: 0 0 1.2em;
+  }
+  .subject {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--ink);
+    margin: 0 0 0.9em;
+  }
+  .text {
+    font-size: 0.8em;
+    line-height: 1.55;
+    margin: 0 0 0.7em;
+  }
+  .ph {
+    font-style: normal;
+    background: var(--blue-050);
+    color: var(--blue-deep);
+    border-radius: 0.3em;
+    padding: 0 0.25em;
+    font-weight: 700;
+    font-size: 0.95em;
+  }
+  .skel {
+    display: block;
+    height: 0.55em;
+    border-radius: 999px;
+    background: var(--slate-100);
+    margin-bottom: 0.65em;
+  }
+  .w90 { width: 90%; }
+  .w75 { width: 75%; }
+  .w85 { width: 85%; }
+  .w40 { width: 40%; }
+
+  .panel {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 0.9em;
+    padding: 1.1em 1.1em 1.2em;
+    align-self: start;
+  }
+  .panel-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--ink);
+    margin: 0 0 0.7em;
+  }
+  .panel-title:not(:first-child) {
+    margin-top: 1.2em;
+  }
+  .block-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5em;
+  }
+  .block {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-size: 0.82em;
+    font-weight: 700;
+    color: var(--slate-600);
+    border: 1px solid var(--slate-200);
+    border-radius: 0.55em;
+    padding: 0.5em 0.7em;
+    white-space: nowrap;
+  }
+  .block :global(svg) {
+    width: 1.1em;
+    height: 1.1em;
+    color: var(--slate-400);
+  }
+
+  .field {
+    margin-bottom: 0.8em;
+  }
+  .field.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .field-label {
+    display: block;
+    font-size: 0.82em;
+    color: var(--slate-500);
+    margin-bottom: 0.3em;
+  }
+  .field.row .field-label {
+    margin-bottom: 0;
+  }
+  .select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+    border: 1px solid var(--slate-200);
+    border-radius: 0.55em;
+    padding: 0.45em 0.7em;
+    font-size: 0.88em;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .toggle {
+    width: 2.4em;
+    height: 1.35em;
+    border-radius: 999px;
+    background: var(--blue);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 0.15em;
+    right: 0.15em;
+    width: 1.05em;
+    height: 1.05em;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .pages {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-top: 0.4em;
+    font-size: 0.8em;
+    color: var(--slate-500);
+    background: var(--slate-050);
+    border: 1px solid var(--slate-100);
+    border-radius: 999px;
+    padding: 0.3em 0.8em;
+  }
+
+  @media (max-width: 560px) {
+    .workspace {
+      grid-template-columns: 1fr;
+    }
+    .panel {
+      display: none;
+    }
+  }
+</style>

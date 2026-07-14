@@ -1,0 +1,124 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  text?: string;
+  bullets?: string[];
+  linkHref?: string;
+  linkLabel?: string;
+  reverse?: boolean;
+}
+const { eyebrow, title, text, bullets = [], linkHref, linkLabel, reverse = false } = Astro.props;
+---
+
+<div class:list={['split', { reverse }]}>
+  <div class="split-copy">
+    <span class="eyebrow">{eyebrow}</span>
+    <h3 class="split-title" set:html={title} />
+    {text && <p class="split-text" set:html={text} />}
+    {
+      bullets.length > 0 && (
+        <ul class="split-list">
+          {bullets.map((b) => (
+            <li>
+              <Icon name="check-circle" size={21} class="li-icon" />
+              <span set:html={b} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      linkHref && (
+        <a class="split-link" href={linkHref}>
+          {linkLabel} <Icon name="arrow-right" size={18} />
+        </a>
+      )
+    }
+  </div>
+  <div class="split-visual">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 2rem + 2vw, 4.5rem);
+    align-items: center;
+  }
+  .split.reverse .split-copy {
+    order: 2;
+  }
+  .split.reverse .split-visual {
+    order: 1;
+  }
+
+  .split-title {
+    font-size: clamp(1.5rem, 1.2rem + 1.3vw, 2.05rem);
+  }
+  .split-text {
+    color: var(--slate-600);
+    font-size: 1.08rem;
+  }
+
+  .split-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.4rem 0 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+  .split-list li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    color: var(--slate-700);
+  }
+  .split-list :global(.li-icon) {
+    flex-shrink: 0;
+    color: var(--blue);
+    margin-top: 2px;
+  }
+
+  .split-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.6rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--blue);
+  }
+  .split-link:hover {
+    text-decoration: none;
+    color: var(--blue-deep);
+  }
+  .split-link :global(svg) {
+    transition: transform 0.18s ease;
+  }
+  .split-link:hover :global(svg) {
+    transform: translateX(4px);
+  }
+
+  .split-visual {
+    min-width: 0;
+    position: relative;
+  }
+
+  @media (max-width: 900px) {
+    .split,
+    .split.reverse {
+      grid-template-columns: 1fr;
+    }
+    .split.reverse .split-copy {
+      order: 0;
+    }
+    .split.reverse .split-visual {
+      order: 1;
+    }
+  }
+</style>

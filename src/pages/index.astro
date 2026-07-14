@@ -1,0 +1,753 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import FAQ from '../components/FAQ.astro';
+import CTABand from '../components/CTABand.astro';
+import MockDashboard from '../components/mockups/MockDashboard.astro';
+import MockEditor from '../components/mockups/MockEditor.astro';
+import MockContacts from '../components/mockups/MockContacts.astro';
+import MockCredit from '../components/mockups/MockCredit.astro';
+import { SITE } from '../data/site';
+import { PRICES, formatEuro } from '../data/pricing';
+
+const title = 'Briefe online versenden – automatisch gedruckt & zugestellt | versendio';
+const description =
+  'Briefe, Rechnungen & Serienbriefe online versenden: PDF hochladen oder im Editor erstellen – versendio übernimmt Druck, Kuvertierung, Porto & Zustellung. Pay as you go, ohne Grundgebühr.';
+
+const softwareLd = {
+  '@type': 'SoftwareApplication',
+  '@id': `${SITE.url}/#software`,
+  name: 'versendio',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: SITE.appUrl,
+  description:
+    'Online-Plattform für automatisierten Briefversand: Briefe erstellen oder als PDF hochladen, Empfänger wählen – Druck, Kuvertierung, Porto und Zustellung inklusive.',
+  offers: {
+    '@type': 'Offer',
+    price: PRICES.standardLetter.toFixed(2),
+    priceCurrency: 'EUR',
+    description: `Briefversand ab ${formatEuro(PRICES.standardLetter)} netto pro Brief – ohne Grundgebühr, ohne Abo.`,
+  },
+  publisher: { '@id': `${SITE.url}/#organization` },
+  inLanguage: 'de-DE',
+};
+
+const usps = [
+  {
+    icon: 'coins',
+    title: 'Pay as you go',
+    text: 'Keine Grundgebühr, kein Abo, keine Mindestmenge: Sie zahlen ausschließlich pro versendetem Brief.',
+  },
+  {
+    icon: 'zap',
+    title: 'Alles automatisch',
+    text: 'Drucken, falzen, kuvertieren, frankieren, versenden – versendio übernimmt den kompletten Prozess.',
+  },
+  {
+    icon: 'users',
+    title: 'Leadlisten & Serienbriefe',
+    text: 'Kontakte aus CSV oder Excel importieren und personalisierte Briefe an hunderte Empfänger senden.',
+  },
+  {
+    icon: 'shield',
+    title: 'DSGVO-konform',
+    text: 'Datenschutz nach europäischen Standards – mit sicherer Übertragung und sorgfältiger Auftragsverarbeitung.',
+  },
+] as const;
+
+const steps = [
+  {
+    icon: 'pen',
+    title: 'Brief erstellen',
+    text: 'Schreiben Sie im Brief-Editor – auf Wunsch mit KI-Entwurf – oder laden Sie ein fertiges PDF hoch. Platzhalter wie {Anrede} und {Firma} personalisieren jeden Brief automatisch.',
+  },
+  {
+    icon: 'users',
+    title: 'Empfänger wählen',
+    text: 'Einzelner Kontakt, ganzes Adressbuch oder importierte Leadliste: Wählen Sie, wer Ihren Brief erhalten soll – auch für Serienbriefe an hunderte Empfänger.',
+  },
+  {
+    icon: 'send',
+    title: 'Versenden & verfolgen',
+    text: 'Wir drucken, kuvertieren und übergeben Ihre Briefe an die Zustellung. Den Status jeder Sendung verfolgen Sie live in Ihrem Dashboard.',
+  },
+] as const;
+
+const useCases = [
+  {
+    icon: 'euro',
+    title: 'Rechnungen & Mahnungen',
+    text: 'Rechnungsversand per Post automatisieren – rechtssicher zugestellt, ohne Druckerei im Büro.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Angebote & Verträge',
+    text: 'Wichtige Dokumente professionell auf Papier – unterschriftsreif beim Empfänger.',
+  },
+  {
+    icon: 'docs',
+    title: 'Serienbriefe & Kundeninfos',
+    text: 'Preisanpassungen, Umzugsmitteilungen oder Newsletter per Brief an Ihre gesamte Kundenliste.',
+  },
+  {
+    icon: 'map-pin',
+    title: 'Direktmailings & Werbung',
+    text: 'Physische Mailings, die auffallen: Neukunden gewinnen mit personalisierter Postwerbung.',
+  },
+  {
+    icon: 'building',
+    title: 'Behörden- & Vertragspost',
+    text: 'Kündigungen, Anträge und Einsendungen fristgerecht verschicken – auf Wunsch per Einschreiben.',
+  },
+  {
+    icon: 'mail',
+    title: 'Gruß- & Weihnachtspost',
+    text: 'Saisonale Karten und Briefe an Kunden und Partner – persönlich, ohne Kuvertier-Marathon.',
+  },
+] as const;
+
+const faqItems = [
+  {
+    q: 'Wie funktioniert der Online-Briefversand mit versendio?',
+    a: 'Sie erstellen Ihren Brief direkt im Online-Editor oder laden ein fertiges PDF hoch, wählen die Empfänger aus und klicken auf „Versenden“. versendio übernimmt den Rest: Druck, Falzung, Kuvertierung, Porto und die Übergabe an die Zustellung. Den Status sehen Sie jederzeit in Ihrem Dashboard.',
+  },
+  {
+    q: 'Was kostet es, einen Brief online zu versenden?',
+    a: `Ein Standardbrief kostet ab ${formatEuro(PRICES.standardLetter)} netto – inklusive Porto, Druck und Kuvertierung. Es gibt keine Grundgebühr und kein Abo: Sie zahlen nur, was Sie tatsächlich versenden. Alle Details finden Sie auf unserer Preisseite.`,
+  },
+  {
+    q: 'Kann ich Serienbriefe an viele Empfänger gleichzeitig senden?',
+    a: 'Ja. Importieren Sie Ihre Empfängerliste als CSV- oder Excel-Datei oder nutzen Sie Ihr Adressbuch in versendio. Platzhalter wie Anrede, Name und Firma personalisieren jeden einzelnen Brief automatisch – ideal für Mailings, Kundeninfos und Kampagnen.',
+  },
+  {
+    q: 'Wie schnell werden meine Briefe verschickt?',
+    a: 'Ihre Briefe werden in der Regel am nächsten Werktag gedruckt und an die Zustellung übergeben. Danach gelten die üblichen Postlaufzeiten. In Ihrem Dashboard sehen Sie für jede Sendung den aktuellen Status.',
+  },
+  {
+    q: 'Ist versendio DSGVO-konform?',
+    a: 'Ja. Ihre Daten werden verschlüsselt übertragen und ausschließlich zur Erbringung des Briefversands verarbeitet. Details regelt unsere Datenschutzerklärung; für Geschäftskunden stellen wir eine Vereinbarung zur Auftragsverarbeitung bereit.',
+  },
+  {
+    q: 'Brauche ich ein Abo oder eine Mindestabnahme?',
+    a: 'Nein. versendio funktioniert mit Prepaid-Guthaben: Sie laden auf, was Sie brauchen, und bezahlen pro Brief. Optional lädt die automatische Aufladung Ihr Guthaben nach, sobald es unter einen Schwellwert fällt.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} jsonLd={[softwareLd]}>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <span class="badge hero-badge">
+          <Icon name="coins" size={15} /> Pay as you go – ohne Grundgebühr
+        </span>
+        <h1>
+          Briefe online versenden – <em>automatisch</em> gedruckt & zugestellt
+        </h1>
+        <p class="lead">
+          versendio ist die Online-Plattform für Ihren Briefversand: Brief im
+          Editor erstellen oder PDF hochladen, Empfänger wählen – Druck,
+          Kuvertierung, Porto und Zustellung übernehmen wir. Sie zahlen nur,
+          was Sie versenden.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href={SITE.appRegister} rel="noopener">
+            Kostenlos starten <Icon name="arrow-right" size={19} />
+          </a>
+          <a class="btn btn-secondary btn-lg" href="/preise">Preise ansehen</a>
+        </div>
+        <ul class="hero-trust">
+          <li><Icon name="check" size={16} strokeWidth={2.4} /> Keine Grundgebühr</li>
+          <li><Icon name="check" size={16} strokeWidth={2.4} /> Kein Abo</li>
+          <li><Icon name="check" size={16} strokeWidth={2.4} /> DSGVO-konform</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <MockDashboard />
+        <div class="float-chip chip-1" aria-hidden="true">
+          <span class="chip-icon ok"><Icon name="check" size={14} strokeWidth={2.6} /></span>
+          <span><b>Zugestellt</b><br />Rechnung #2043 · Berlin</span>
+        </div>
+        <div class="float-chip chip-2" aria-hidden="true">
+          <span class="chip-icon blue"><Icon name="send" size={14} /></span>
+          <span><b>248 Briefe unterwegs</b><br />Serienbrief Kundeninfo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== USP-BAND ===================== -->
+  <section class="section usp-section" aria-label="Vorteile">
+    <div class="container">
+      <div class="usp-grid">
+        {
+          usps.map((usp) => (
+            <div class="usp">
+              <span class="usp-icon">
+                <Icon name={usp.icon} size={24} />
+              </span>
+              <h2>{usp.title}</h2>
+              <p>{usp.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SO FUNKTIONIERT'S ===================== -->
+  <section class="section section-soft" id="so-funktionierts">
+    <div class="container">
+      <SectionHead
+        eyebrow="So funktioniert’s"
+        title="Vom Entwurf zum Briefkasten – <em>in drei Schritten</em>"
+        lead="Kein Drucker, keine Briefmarken, kein Gang zur Post. Der komplette Briefversand läuft digital – die Zustellung übernimmt der Postweg."
+      />
+      <ol class="steps">
+        {
+          steps.map((step, i) => (
+            <li class="step card">
+              <span class="step-num">{i + 1}</span>
+              <span class="step-icon"><Icon name={step.icon} size={26} /></span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section class="section features">
+    <div class="container feature-stack">
+      <SectionHead
+        eyebrow="Die Plattform"
+        title="Ein Werkzeug für <em>Ihre gesamte Geschäftspost</em>"
+        lead="Vom einzelnen Geschäftsbrief bis zum Mailing an tausende Empfänger – versendio bündelt Erstellung, Personalisierung, Versand und Kostenkontrolle an einem Ort."
+      />
+
+      <FeatureSplit
+        eyebrow="Brief-Editor"
+        title="Professionelle Briefe in Minuten – mit KI-Entwurf"
+        text="Der integrierte Editor kennt die Regeln der Geschäftspost: Adressfeld, Falzmarken und Layout sitzen automatisch richtig. Sie kümmern sich nur um den Inhalt – oder lassen die KI einen ersten Entwurf schreiben."
+        bullets={[
+          '<strong>KI-Entwurf:</strong> Aus wenigen Stichworten wird ein fertiger Brieftext',
+          '<strong>Bausteine:</strong> Betreff, Textabsätze, Bilder und Trennlinien flexibel kombinieren',
+          '<strong>Platzhalter:</strong> Anrede, Name & Firma werden je Empfänger automatisch eingesetzt',
+          '<strong>Briefpapier:</strong> Logo, Schrift und Farben einmal speichern, immer wiederverwenden',
+        ]}
+        linkHref="/funktionen"
+        linkLabel="Alle Editor-Funktionen"
+      >
+        <MockEditor />
+      </FeatureSplit>
+
+      <FeatureSplit
+        reverse
+        eyebrow="Kontakte & Leadlisten"
+        title="Leadlisten importieren statt Adressen abtippen"
+        text="Bringen Sie Ihre Empfänger in Sekunden in die Plattform: per CSV- oder Excel-Import, aus dem Adressbuch oder als gepflegte Kontaktliste für wiederkehrende Kampagnen."
+        bullets={[
+          '<strong>CSV/Excel-Import</strong> mit automatischer Feld-Zuordnung',
+          '<strong>Adressbuch</strong> mit Suche nach Name, Firma oder Ort',
+          '<strong>Kontaktlisten</strong> für Mailings, Kundengruppen und Regionen',
+          '<strong>Serienversand:</strong> Ein Brief, hunderte personalisierte Empfänger',
+        ]}
+        linkHref="/funktionen#kontakte"
+        linkLabel="Mehr zu Kontakten & Listen"
+      >
+        <MockContacts />
+      </FeatureSplit>
+
+      <FeatureSplit
+        eyebrow="Guthaben & Kosten"
+        title="Volle Kostenkontrolle mit Prepaid-Guthaben"
+        text="versendio funktioniert wie eine Portokasse in der Cloud: Guthaben aufladen, Briefe versenden, jede Transaktion nachvollziehen. Ohne Abo, ohne versteckte Kosten."
+        bullets={[
+          '<strong>Pay as you go:</strong> Abgerechnet wird nur, was wirklich versendet wurde',
+          '<strong>Automatische Aufladung</strong> ab frei wählbarem Schwellwert',
+          '<strong>Transaktionsübersicht</strong> mit Beleg zu jeder Aufladung',
+          '<strong>Transparente Netto-Preise</strong> mit ausgewiesener Umsatzsteuer',
+        ]}
+        linkHref="/preise"
+        linkLabel="Preise im Detail"
+      >
+        <MockCredit />
+      </FeatureSplit>
+    </div>
+  </section>
+
+  <!-- ===================== USE CASES ===================== -->
+  <section class="section section-soft">
+    <div class="container">
+      <SectionHead
+        eyebrow="Einsatzbereiche"
+        title="Was versenden Sie <em>heute</em>?"
+        lead="Ob einzelne Rechnung oder Mailing an tausend Empfänger – wenn es per Post ankommen soll, geht es mit versendio schneller."
+      />
+      <div class="usecase-grid">
+        {
+          useCases.map((uc) => (
+            <div class="usecase card">
+              <span class="uc-icon"><Icon name={uc.icon} size={22} /></span>
+              <h3>{uc.title}</h3>
+              <p>{uc.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTEGRATIONEN ===================== -->
+  <section class="section">
+    <div class="container integration">
+      <div class="integration-copy">
+        <span class="eyebrow">Integrationen</span>
+        <h2>Anbinden statt abtippen</h2>
+        <p class="lead">
+          Importieren Sie Empfänger aus CSV und Excel – oder verbinden Sie
+          versendio direkt mit Ihren Systemen, damit Rechnungen und
+          Dokumente vollautomatisch als Brief rausgehen.
+        </p>
+      </div>
+      <div class="integration-grid">
+        <div class="int-card card">
+          <Icon name="upload" size={22} />
+          <h3>CSV & Excel</h3>
+          <p>Leadlisten und Adressbestände in Sekunden importieren.</p>
+        </div>
+        <div class="int-card card">
+          <Icon name="zap" size={22} />
+          <h3>API-Anbindung</h3>
+          <p>Briefversand direkt aus Ihrer eigenen Software auslösen.</p>
+        </div>
+        <div class="int-card card">
+          <Icon name="euro" size={22} />
+          <h3>Rechnungsversand</h3>
+          <p>Rechnungen aus ERP oder Buchhaltung automatisch verschicken.</p>
+        </div>
+        <div class="int-card card">
+          <Icon name="sliders" size={22} />
+          <h3>Individuelle Lösungen</h3>
+          <p>Größere Volumen oder Sonderfälle? <a href="mailto:info@versendio.de">Sprechen Sie uns an.</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PREIS-TEASER ===================== -->
+  <section class="section section-soft">
+    <div class="container price-teaser card">
+      <div class="pt-copy">
+        <span class="eyebrow">Preise</span>
+        <h2>Briefversand ab {formatEuro(PRICES.standardLetter)} netto</h2>
+        <p>
+          Inklusive Porto, Druck in Graustufen und Kuvertierung. Farbdruck,
+          weitere Seiten und Einschreiben einfach nach Bedarf dazubuchen –
+          ganz ohne Grundgebühr.
+        </p>
+        <ul class="pt-list">
+          <li><Icon name="check" size={16} strokeWidth={2.4} /> Keine Einrichtungskosten</li>
+          <li><Icon name="check" size={16} strokeWidth={2.4} /> Keine Mindestmenge</li>
+          <li><Icon name="check" size={16} strokeWidth={2.4} /> Guthaben flexibel aufladen</li>
+        </ul>
+        <a class="btn btn-primary" href="/preise">
+          Alle Preise ansehen <Icon name="arrow-right" size={18} />
+        </a>
+      </div>
+      <div class="pt-price" aria-hidden="true">
+        <span class="pt-label">Standardbrief</span>
+        <span class="pt-value">{formatEuro(PRICES.standardLetter)}</span>
+        <span class="pt-note">netto · inkl. Porto, Druck & Kuvert</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <SectionHead
+        eyebrow="FAQ"
+        title="Häufige Fragen zum Online-Briefversand"
+      />
+      <FAQ items={faqItems} />
+    </div>
+  </section>
+
+  <CTABand />
+</BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(3rem, 2rem + 4vw, 6rem) 0 clamp(3rem, 2rem + 3vw, 5rem);
+    background:
+      radial-gradient(720px 480px at 12% -10%, var(--blue-050) 0%, transparent 60%),
+      radial-gradient(900px 560px at 105% 8%, #eef3ff 0%, transparent 55%),
+      linear-gradient(180deg, #fdfdff 0%, #f7f9fd 100%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--slate-200) 1px, transparent 1px);
+    background-size: 26px 26px;
+    opacity: 0.5;
+    mask-image: radial-gradient(720px 480px at 70% 20%, black, transparent 75%);
+    -webkit-mask-image: radial-gradient(720px 480px at 70% 20%, black, transparent 75%);
+    pointer-events: none;
+  }
+  .hero .container {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 10fr) minmax(0, 11fr);
+    gap: clamp(2rem, 2rem + 2vw, 4rem);
+    align-items: center;
+  }
+  .hero-badge {
+    margin-bottom: 1.3rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--blue);
+  }
+  .hero .lead {
+    max-width: 54ch;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-top: 1.9rem;
+  }
+  .hero-trust {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.3rem;
+    padding: 0;
+    margin: 1.6rem 0 0;
+    font-size: 0.95rem;
+    color: var(--slate-600);
+  }
+  .hero-trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .hero-trust :global(svg) {
+    color: var(--green-600);
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+  .float-chip {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    padding: 0.7rem 1rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: var(--slate-600);
+    animation: floaty 5.5s ease-in-out infinite;
+  }
+  .float-chip b {
+    color: var(--ink);
+    font-family: var(--font-head);
+    font-weight: 600;
+  }
+  .chip-1 {
+    top: -1.4rem;
+    right: -0.6rem;
+  }
+  .chip-2 {
+    bottom: -1.2rem;
+    left: -1rem;
+    animation-delay: 1.6s;
+  }
+  .chip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .chip-icon.ok {
+    background: var(--green-050);
+    color: var(--green-600);
+  }
+  .chip-icon.blue {
+    background: var(--blue-050);
+    color: var(--blue);
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+
+  @media (max-width: 980px) {
+    .hero .container {
+      grid-template-columns: 1fr;
+    }
+    .hero-visual {
+      margin-top: 1rem;
+    }
+    .chip-1 { top: -1rem; right: 0.4rem; }
+    .chip-2 { bottom: -1rem; left: 0.4rem; }
+  }
+
+  /* ---------- USP ---------- */
+  .usp-section {
+    padding-block: clamp(3rem, 2.5rem + 2vw, 4.5rem);
+  }
+  .usp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.4rem, 1rem + 1.5vw, 2.6rem);
+  }
+  .usp h2 {
+    font-size: 1.12rem;
+    margin: 0.9rem 0 0.4rem;
+  }
+  .usp p {
+    font-size: 0.97rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  .usp-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    background: var(--blue-050);
+    color: var(--blue);
+    border: 1px solid var(--blue-100);
+  }
+  @media (max-width: 900px) {
+    .usp-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .usp-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Steps ---------- */
+  .steps {
+    list-style: none;
+    counter-reset: step;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    padding: 0;
+    margin: 0;
+  }
+  .step {
+    position: relative;
+    padding: 2rem 1.6rem 1.7rem;
+  }
+  .step-num {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.5rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--slate-100);
+  }
+  .step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+    color: #fff;
+    box-shadow: var(--shadow-blue);
+    margin-bottom: 1.2rem;
+  }
+  .step h3 {
+    margin-bottom: 0.4rem;
+  }
+  .step p {
+    font-size: 0.99rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
+  }
+
+  /* ---------- Features ---------- */
+  .feature-stack {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  /* ---------- Use Cases ---------- */
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+  }
+  .usecase {
+    padding: 1.7rem 1.5rem 1.5rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .usecase:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .uc-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 11px;
+    background: var(--blue-050);
+    color: var(--blue);
+    border: 1px solid var(--blue-100);
+    margin-bottom: 1rem;
+  }
+  .usecase h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+  }
+  .usecase p {
+    font-size: 0.97rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .usecase-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .usecase-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Integrationen ---------- */
+  .integration {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(2rem, 2rem + 2vw, 4rem);
+    align-items: center;
+  }
+  .integration-copy h2 {
+    margin-bottom: 0.5em;
+  }
+  .integration-copy .lead {
+    margin: 0;
+  }
+  .integration-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+  .int-card {
+    padding: 1.4rem 1.3rem 1.2rem;
+    color: var(--blue);
+  }
+  .int-card h3 {
+    font-size: 1.02rem;
+    margin: 0.8rem 0 0.3rem;
+  }
+  .int-card p {
+    font-size: 0.93rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .integration { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .integration-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Preis-Teaser ---------- */
+  .price-teaser {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: 2.5rem;
+    align-items: center;
+    padding: clamp(2rem, 1.8rem + 2vw, 3.5rem);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+  }
+  .pt-copy h2 {
+    margin-bottom: 0.4em;
+  }
+  .pt-copy > p {
+    color: var(--slate-600);
+    max-width: 52ch;
+  }
+  .pt-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.1rem 0 1.7rem;
+    display: grid;
+    gap: 0.55rem;
+    color: var(--slate-700);
+  }
+  .pt-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .pt-list :global(svg) {
+    color: var(--green-600);
+  }
+  .pt-price {
+    text-align: center;
+    background:
+      radial-gradient(340px 240px at 80% -30%, rgba(255, 255, 255, 0.22), transparent 60%),
+      linear-gradient(140deg, var(--blue) 0%, var(--blue-deep) 100%);
+    border-radius: var(--r-lg);
+    color: #fff;
+    padding: 2.6rem 1.6rem;
+    box-shadow: var(--shadow-blue);
+  }
+  .pt-label {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .pt-value {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: clamp(2.6rem, 2rem + 2vw, 3.6rem);
+    letter-spacing: -0.02em;
+    margin: 0.3rem 0 0.4rem;
+  }
+  .pt-note {
+    font-size: 0.88rem;
+    opacity: 0.85;
+  }
+  @media (max-width: 860px) {
+    .price-teaser { grid-template-columns: 1fr; }
+  }
+</style>

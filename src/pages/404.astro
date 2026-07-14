@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Seite nicht gefunden (404) | versendio"
+  description="Diese Seite konnte leider nicht zugestellt werden."
+  noindex
+>
+  <section class="nf">
+    <div class="container nf-inner">
+      <p class="nf-badge badge"><Icon name="mail" size={15} /> Unzustellbar</p>
+      <p class="nf-code" aria-hidden="true">404</p>
+      <h1>Diese Seite konnte nicht zugestellt werden.</h1>
+      <p class="lead">
+        Empfänger unbekannt verzogen: Die aufgerufene Adresse existiert nicht
+        (mehr). Zurück zur Startseite – dort kommt alles an.
+      </p>
+      <div class="nf-actions">
+        <a class="btn btn-primary btn-lg" href="/">Zur Startseite</a>
+        <a class="btn btn-secondary btn-lg" href="/blog">Zum Blog</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding: clamp(4rem, 3rem + 5vw, 8rem) 0;
+    text-align: center;
+    background:
+      radial-gradient(700px 420px at 50% -20%, var(--blue-050) 0%, transparent 65%),
+      #fff;
+  }
+  .nf-inner {
+    max-width: 640px;
+  }
+  .nf-badge {
+    margin-bottom: 1.4rem;
+  }
+  .nf-code {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: clamp(4.5rem, 3rem + 8vw, 8rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.2em;
+    background: linear-gradient(120deg, var(--blue) 0%, var(--blue-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .nf h1 {
+    font-size: clamp(1.4rem, 1.2rem + 1vw, 1.9rem);
+  }
+  .nf .lead {
+    margin-inline: auto;
+    max-width: 44ch;
+  }
+  .nf-actions {
+    display: flex;
+    gap: 0.9rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+</style>

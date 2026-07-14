@@ -1,0 +1,127 @@
+---
+import MockShell from './MockShell.astro';
+import Icon from '../Icon.astro';
+
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+
+const contacts = [
+  { name: 'Erika Mustermann', firma: 'Muster GmbH', ort: '10115 Berlin' },
+  { name: 'Jonas Weber', firma: 'Weber & Söhne KG', ort: '30159 Hannover' },
+  { name: 'Anna Schmidt', firma: '–', ort: '80331 München' },
+  { name: 'Lukas Brandt', firma: 'TechNova UG', ort: '50667 Köln' },
+];
+---
+
+<MockShell active="kontakte" class={cls}>
+  <div class="head">
+    <div>
+      <p class="m-h1">Kontakte</p>
+      <p class="m-sub">Ihr Adressbuch – einzeln anlegen oder als Liste importieren.</p>
+    </div>
+    <div class="actions">
+      <span class="m-btn sec"><Icon name="upload" size={13} /> CSV/Excel importieren</span>
+      <span class="m-btn pri"><Icon name="plus" size={13} strokeWidth={2.4} /> Kontakt anlegen</span>
+    </div>
+  </div>
+
+  <div class="search m-card">
+    <Icon name="search" size={13} />
+    <span>Nach Name, Firma oder Ort suchen …</span>
+  </div>
+
+  <div class="m-card table">
+    <div class="tr th">
+      <span>Name</span><span>Firma</span><span>Ort</span><span class="right">Aktionen</span>
+    </div>
+    {
+      contacts.map((c) => (
+        <div class="tr">
+          <span class="name">{c.name}</span>
+          <span>{c.firma}</span>
+          <span>{c.ort}</span>
+          <span class="right acts">
+            <Icon name="pen" size={12} />
+            <Icon name="trash" size={12} class="del" />
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</MockShell>
+
+<style>
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1em;
+  }
+  .actions {
+    display: flex;
+    gap: 0.6em;
+  }
+  .actions :global(svg) {
+    width: 1.05em;
+    height: 1.05em;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.65em 1em;
+    border-radius: 0.7em;
+    color: var(--slate-400);
+    font-size: 0.95em;
+    max-width: 26em;
+    margin-bottom: 1.1em;
+  }
+  .search :global(svg) {
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  .table {
+    overflow: hidden;
+  }
+  .tr {
+    display: grid;
+    grid-template-columns: 1.4fr 1.2fr 1fr 0.6fr;
+    gap: 0.8em;
+    align-items: center;
+    padding: 0.75em 1.2em;
+    border-top: 1px solid var(--slate-100);
+    font-size: 0.95em;
+  }
+  .tr.th {
+    border-top: none;
+    background: #fbfcfe;
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.9em;
+  }
+  .name {
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .right {
+    text-align: right;
+    justify-self: end;
+  }
+  .acts {
+    display: inline-flex;
+    gap: 0.8em;
+    color: var(--slate-400);
+  }
+  .acts :global(.del) {
+    color: var(--red-600);
+  }
+  .acts :global(svg) {
+    width: 1.05em;
+    height: 1.05em;
+  }
+</style>

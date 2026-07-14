@@ -1,0 +1,142 @@
+---
+import LogoDark from '../assets/versendio-logo-dark.svg';
+import Icon from './Icon.astro';
+import { SITE, COMPANY, NAV } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" aria-label="versendio – zur Startseite">
+          <LogoDark width={150} height={34} />
+        </a>
+        <p>
+          Briefe online versenden – automatisch gedruckt, kuvertiert und
+          zugestellt. Pay as you go, ohne Grundgebühr.
+        </p>
+        <p class="footer-note">Ein Projekt der {COMPANY.name}, Hannover.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Produkt">
+        <h2>Produkt</h2>
+        {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href={SITE.appLogin} rel="noopener">Anmelden</a>
+        <a href={SITE.appRegister} rel="noopener">Kostenlos registrieren</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Rechtliches">
+        <h2>Rechtliches</h2>
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <a href="/agb">AGB</a>
+      </nav>
+
+      <div class="footer-col footer-contact">
+        <h2>Kontakt</h2>
+        <p>
+          {COMPANY.name}<br />
+          {COMPANY.street}<br />
+          {COMPANY.zip} {COMPANY.city}
+        </p>
+        <a href={SITE.phoneHref}>
+          <Icon name="phone" size={16} /> {SITE.phone}
+        </a>
+        <a href={`mailto:${SITE.email}`}>
+          <Icon name="mail" size={16} /> {SITE.email}
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© {year} {COMPANY.name} · Alle Rechte vorbehalten.</p>
+      <p class="made-in">Entwickelt in Hannover 🇩🇪</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #0d1436;
+    background: linear-gradient(180deg, #101840 0%, #0b102c 100%);
+    color: #aab3d6;
+    padding: clamp(3rem, 5vw, 4.5rem) 0 2rem;
+    font-size: 0.98rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+    gap: 2.5rem;
+  }
+
+  .footer-brand p {
+    margin-top: 1.2rem;
+    max-width: 34ch;
+    line-height: 1.6;
+  }
+  .footer-note {
+    font-size: 0.88rem;
+    color: #7c86ad;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .footer-col h2 {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 0.5rem;
+  }
+  .footer-col a {
+    color: #aab3d6;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+  }
+  .footer-col a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-contact p {
+    margin: 0 0 0.4rem;
+    line-height: 1.6;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.88rem;
+    color: #7c86ad;
+  }
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
