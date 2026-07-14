@@ -5,7 +5,7 @@ import { BANNER } from '../data/site';
 
 {
   BANNER.enabled && (
-    <div class="banner" id="promo-banner" data-expires={BANNER.expires} hidden>
+    <div class="banner" id="promo-banner" data-expires={BANNER.expires}>
       <div class="container banner-inner">
         <p>
           <span class="banner-emoji" aria-hidden="true">{BANNER.emoji}</span>
@@ -21,19 +21,31 @@ import { BANNER } from '../data/site';
   )
 }
 
-<script>
-  const banner = document.getElementById('promo-banner');
-  if (banner) {
-    const expires = banner.dataset.expires;
-    const dismissed = localStorage.getItem('versendio-banner-dismissed') === expires;
-    const expired = expires ? Date.now() > new Date(expires).getTime() : false;
-    if (!dismissed && !expired) banner.hidden = false;
-
-    banner.querySelector('.banner-close')?.addEventListener('click', () => {
+<!-- Synchron direkt nach dem Banner: blendet ihn ohne Layout-Shift/Flackern
+     aus, wenn er abgelaufen ist oder bereits geschlossen wurde. -->
+<script is:inline>
+  (function () {
+    var banner = document.getElementById('promo-banner');
+    if (!banner) return;
+    var expires = banner.dataset.expires;
+    var dismissed = false;
+    try {
+      dismissed = localStorage.getItem('versendio-banner-dismissed') === expires;
+    } catch (e) {}
+    var expired = expires ? Date.now() > new Date(expires).getTime() : false;
+    if (dismissed || expired) {
       banner.hidden = true;
-      if (expires) localStorage.setItem('versendio-banner-dismissed', expires);
-    });
-  }
+      return;
+    }
+    var close = banner.querySelector('.banner-close');
+    close &&
+      close.addEventListener('click', function () {
+        banner.hidden = true;
+        try {
+          localStorage.setItem('versendio-banner-dismissed', expires);
+        } catch (e) {}
+      });
+  })();
 </script>
 
 <style>

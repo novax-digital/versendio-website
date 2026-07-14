@@ -87,6 +87,9 @@ const graph = {
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#ffffff" />
 
+    <link rel="preconnect" href="https://stats.novax-digital.de" crossorigin />
+    <link rel="dns-prefetch" href="https://stats.novax-digital.de" />
+
     <link
       rel="preload"
       href="/fonts/poppins-600.woff2"
@@ -126,6 +129,18 @@ const graph = {
     <meta name="generator" content={Astro.generator} />
 
     <script is:inline type="application/ld+json" set:html={JSON.stringify(graph)} />
+
+    <!-- Umami Analytics (selbst gehostet, cookielos) -->
+    <script
+      is:inline
+      defer
+      src="https://stats.novax-digital.de/script.js"
+      data-website-id="f97a1d82-3fbc-4c6e-a8f8-056e56b0c489"></script>
+    <script
+      is:inline
+      defer
+      src="https://stats.novax-digital.de/recorder.js"
+      data-website-id="f97a1d82-3fbc-4c6e-a8f8-056e56b0c489"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
