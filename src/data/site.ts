@@ -7,7 +7,7 @@ export const SITE = {
   url: 'https://versendio.de',
   appUrl: 'https://app.versendio.de',
   appLogin: 'https://app.versendio.de/login',
-  appRegister: 'https://app.versendio.de/register',
+  appRegister: 'https://app.versendio.de/registrieren',
   title: 'versendio – Briefe online versenden. Automatisch gedruckt & zugestellt.',
   description:
     'Briefe, Rechnungen & Mailings online versenden: PDF hochladen oder im Editor erstellen – versendio übernimmt Druck, Kuvertierung, Porto und Versand. Pay as you go, ohne Grundgebühr.',
@@ -42,8 +42,8 @@ export const BANNER = {
   enabled: true,
   emoji: '🎉',
   label: 'Launch-Angebot',
-  text: 'versendio ist live – 20 % Rabatt auf alle Guthaben-Aufladungen bis zum 30.08.2026.',
+  text: 'versendio ist live – 20 % zusätzliches Guthaben on top bei jeder Aufladung bis zum 30.08.2026.',
   ctaLabel: 'Jetzt sichern',
-  ctaHref: 'https://app.versendio.de/register',
+  ctaHref: 'https://app.versendio.de/registrieren',
   expires: '2026-08-30T23:59:59+02:00',
 } as const;

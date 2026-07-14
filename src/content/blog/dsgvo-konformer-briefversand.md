@@ -93,4 +93,4 @@ Gesundheitsdaten, Mandanteninformationen, Sozialdaten – bei besonderen Kategor
 
 DSGVO-konformer Briefversand ist keine Raketenwissenschaft: Rechtsgrundlage kennen, AVV abschließen, auf einen sorgfältigen Anbieter setzen und die eigenen Listen sauber halten. Wer diese vier Dinge beherzigt, versendet entspannter als mancher E-Mail-Marketer.
 
-Sie möchten sehen, wie das in der Praxis aussieht? [Registrieren Sie sich kostenlos bei versendio](https://app.versendio.de/register) – und werfen Sie vorher gern einen Blick in unsere [Datenschutzerklärung](/datenschutz). Transparenz ist schließlich der beste Vertrauensbeweis.
+Sie möchten sehen, wie das in der Praxis aussieht? [Registrieren Sie sich kostenlos bei versendio](https://app.versendio.de/registrieren) – und werfen Sie vorher gern einen Blick in unsere [Datenschutzerklärung](/datenschutz). Transparenz ist schließlich der beste Vertrauensbeweis.

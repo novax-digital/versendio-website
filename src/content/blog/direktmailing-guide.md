@@ -10,11 +10,11 @@ faq:
   - q: "Ist Werbung per Brief ohne Einwilligung erlaubt?"
     a: "Postalische Werbung ist – anders als E-Mail-Werbung – in der Regel ohne Einwilligung zulässig und stützt sich auf das berechtigte Interesse (Art. 6 Abs. 1 lit. f DSGVO). Widersprüche einzelner Empfänger müssen Sie respektieren und dauerhaft beachten."
   - q: "Was kostet ein Direktmailing an 500 Empfänger?"
-    a: "Bei versendio zahlen Sie pro Brief: 500 einseitige Farbbriefe kosten 500 × 1,39 € = 695 € netto – Porto, Druck und Kuvertierung inklusive, ohne Grundgebühr und ohne Mindestmenge."
+    a: "Bei versendio zahlen Sie pro Brief: 500 einseitige Farbbriefe kosten 500 × 1,15 € = 575 € netto – Porto, Druck und Kuvertierung inklusive, ohne Grundgebühr und ohne Mindestmenge."
   - q: "Wie messe ich den Erfolg eines Print-Mailings?"
     a: "Mit eindeutigen Rückkanälen: individuelle Gutscheincodes, QR-Codes auf eine eigene Landingpage, dedizierte Telefonnummer oder Antwortkarte. So lässt sich jede Reaktion dem Mailing zuordnen und die Response-Quote sauber berechnen."
   - q: "Lohnen sich Direktmailings auch für kleine Unternehmen?"
-    a: "Gerade für sie: Dank Pay as you go gibt es keine Mindestauflagen. Ein regional gezieltes Mailing an 100 sorgfältig ausgewählte Adressen kostet weniger als 150 € und ist oft wirksamer als ein Monat Anzeigenbudget."
+    a: "Gerade für sie: Dank Pay as you go gibt es keine Mindestauflagen. Ein regional gezieltes Mailing an 100 sorgfältig ausgewählte Adressen kostet in Farbe nur 115 € netto und ist oft wirksamer als ein Monat Anzeigenbudget."
 ---
 
 Der durchschnittliche Posteingang: hunderte ungelesene E-Mails, aggressive Spam-Filter, Werbeblindheit. Der durchschnittliche Briefkasten: erstaunlich leer. Genau diese Lücke macht **Direktmailings** wieder attraktiv – ein guter Werbebrief bekommt heute mehr ungeteilte Aufmerksamkeit als fast jeder digitale Kanal.
@@ -50,7 +50,7 @@ Ein Direktmailing ist ein Verkaufsgespräch auf Papier. Die Klassiker der Textst
 - **PS nutzen:** Das Postskriptum wird überdurchschnittlich oft gelesen – platzieren Sie hier Frist oder Bonus.
 - **Ein klarer Call-to-Action:** QR-Code zur Landingpage, Gutscheincode, Telefonnummer. Einer. Nicht drei.
 
-**Gestaltungstipps:** Ihr Logo und Briefpapier schaffen Wiedererkennung; Farbdruck lohnt sich bei Mailings fast immer (Aufpreis bei versendio: 0,20 € pro Seite). Halten Sie den Brief bei einer Seite – Beilagen und Zweitseiten nur, wenn sie wirklich verkaufen.
+**Gestaltungstipps:** Ihr Logo und Briefpapier schaffen Wiedererkennung; Farbdruck lohnt sich bei Mailings fast immer (Aufpreis bei versendio: nur 5 Cent je Brief). Halten Sie den Brief bei einer Seite – Beilagen und Zweitseiten nur, wenn sie wirklich verkaufen.
 
 ## Schritt 3: Personalisierung, die nicht aufdringlich wirkt
 
@@ -77,11 +77,11 @@ Gedruckt, kuvertiert und der Zustellung übergeben wird automatisch; den Status 
 
 Beispielrechnung mit versendio-Preisen (netto, [Preisliste](/preise)):
 
-| Auflage | 1 Seite Farbe je Brief | Gesamtkosten |
+| Auflage | 1 Blatt Farbe je Brief | Gesamtkosten |
 | --- | --- | --- |
-| 100 | 1,39 € | 139,00 € |
-| 250 | 1,39 € | 347,50 € |
-| 500 | 1,39 € | 695,00 € |
+| 100 | 1,15 € | 115,00 € |
+| 250 | 1,15 € | 287,50 € |
+| 500 | 1,15 € | 575,00 € |
 
 Die entscheidende Größe ist der **Kundenwert**: Bringt ein gewonnener Kunde z. B. 500 € Deckungsbeitrag, trägt sich ein 500er-Mailing bereits ab zwei Abschlüssen – eine Response-Quote von 0,4 %. Rechnen Sie vor dem Versand rückwärts: Wie viele Reaktionen brauche ich, damit sich die Kampagne lohnt?
 
@@ -104,4 +104,4 @@ Postalische Werbung ist vergleichsweise unkompliziert: Sie stützt sich regelmä
 
 Während digitale Kanäle lauter und teurer werden, ist der Briefkasten leise geworden – und genau deshalb wirksam. Mit sauberer Liste, klarem Angebot und messbarem Rückkanal ist das Direktmailing einer der unterschätztesten Wachstumskanäle für kleine und mittlere Unternehmen. Und dank Pay as you go starten Sie so klein, wie Sie möchten.
 
-Ihre erste Kampagne ist näher, als Sie denken: [Kostenlos registrieren](https://app.versendio.de/register), 50 Adressen importieren, Brief schreiben – heute noch versenden.
+Ihre erste Kampagne ist näher, als Sie denken: [Kostenlos registrieren](https://app.versendio.de/registrieren), 50 Adressen importieren, Brief schreiben – heute noch versenden.

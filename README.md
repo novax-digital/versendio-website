@@ -35,11 +35,11 @@ npm run preview   # Build lokal testen
 
 **Neuer Blog-Artikel:** Markdown-Datei in `src/content/blog/` anlegen, Cover-Bild (16:9) nach `src/assets/blog/` legen, Frontmatter ausfüllen – Sitemap, RSS, Blog-Index und Schema.org werden automatisch aktualisiert.
 
-## Vor dem Livegang ausfüllen
+## Vor dem Livegang prüfen
 
-- [ ] `src/pages/impressum.astro`: **HRB-Nummer** und **USt-IdNr.** ergänzen
-- [ ] Preise in `src/data/pricing.ts` mit den echten App-Preisen abgleichen
-- [ ] Login-/Registrierungs-URLs prüfen (`src/data/site.ts` → `appLogin`, `appRegister`)
+- [x] Impressum: HRB 220589, USt-IdNr. DE335613731
+- [x] Preise in `src/data/pricing.ts` = App-Preisliste (Stand Juli 2026); Einschreiben ist dort hinterlegt, aber deaktiviert (`REGISTERED_SURCHARGES.active`)
+- [x] App-URLs: `/login` und `/registrieren`
 - [ ] Datenschutz & AGB juristisch prüfen lassen (Entwurfsqualität)
 
 ## Deployment auf Vercel

@@ -12,7 +12,7 @@ faq:
   - q: "Welche Dateiformate eignen sich für den Empfänger-Import?"
     a: "CSV- und Excel-Dateien sind der Standard. Wichtig sind saubere Spalten für Anrede, Vorname, Nachname, Firma, Straße, PLZ und Ort – dann klappt die Zuordnung der Platzhalter automatisch."
   - q: "Was kostet ein Serienbrief an 100 Empfänger?"
-    a: "Sie zahlen einfach pro Brief: 100 Standardbriefe (1 Seite, s/w) kosten bei versendio 100 × 1,19 € = 119 € netto – inklusive Porto, Druck und Kuvertierung, ohne Grundgebühr."
+    a: "Sie zahlen einfach pro Brief: 100 Standardbriefe (1 Blatt, s/w) kosten bei versendio 100 × 1,10 € = 110 € netto – inklusive Porto, Druck und Kuvertierung, ohne Grundgebühr."
   - q: "Kann ich einen Serienbrief vor dem Versand prüfen?"
     a: "Ja. Die Versand-Vorschau zeigt den fertigen Brief als PDF – inklusive eingesetzter Platzhalter. So sehen Sie exakt, was beim Empfänger ankommt, bevor Sie bezahlen."
 ---
@@ -43,7 +43,7 @@ Die Qualität Ihres Serienbriefs steht und fällt mit der Liste. Bewährt hat si
 - **Vorname, Nachname**
 - **Firma** (optional, aber wertvoll für B2B)
 - **Straße und Hausnummer**
-- **PLZ, Ort** (und Land bei internationalen Empfängern)
+- **PLZ, Ort**
 
 **Praxis-Tipps für saubere Daten:**
 
@@ -69,7 +69,7 @@ Beim Versand wird jeder Platzhalter pro Empfänger ersetzt – aus einem Entwurf
 
 ## Schritt 3: Prüfen, versenden, zurücklehnen
 
-Vor dem Versand lohnt der Blick in die **Vorschau**: Sie zeigt den fertigen Brief als PDF, mit echten Empfängerdaten statt Platzhaltern. Stimmt alles, wählen Sie die Versandoptionen (Graustufen oder Farbe, ggf. Einschreiben) und starten den Versand.
+Vor dem Versand lohnt der Blick in die **Vorschau**: Sie zeigt den fertigen Brief als PDF, mit echten Empfängerdaten statt Platzhaltern. Stimmt alles, wählen Sie die Versandoptionen (Graustufen oder Farbe, ein- oder beidseitig) und starten den Versand.
 
 Ab hier übernimmt die Plattform:
 
@@ -81,9 +81,9 @@ Ab hier übernimmt die Plattform:
 
 Beim Pay-as-you-go-Modell ist die Rechnung einfach – Sie multiplizieren den Briefpreis mit der Empfängerzahl:
 
-- **100 Briefe**, 1 Seite s/w: 100 × 1,19 € = **119,00 € netto**
-- **250 Briefe**, 1 Seite Farbe: 250 × 1,39 € = **347,50 € netto**
-- **500 Briefe**, 2 Seiten s/w: 500 × 1,34 € = **670,00 € netto**
+- **100 Briefe**, 1 Blatt s/w: 100 × 1,10 € = **110,00 € netto**
+- **250 Briefe**, 1 Blatt Farbe: 250 × 1,15 € = **287,50 € netto**
+- **500 Briefe**, 2 Blatt s/w: 500 × 1,16 € = **580,00 € netto**
 
 Keine Einrichtungsgebühr, keine Mindestmenge, kein Abo – die komplette Preisliste finden Sie [hier](/preise). Zum Vergleich: Bei manueller Verarbeitung rechnet man je Brief gern 2–3 Minuten Arbeitszeit. Bei 250 Briefen sind das über acht Stunden – die teuerste Position ist fast nie das Porto.
 
@@ -101,4 +101,4 @@ Keine Einrichtungsgebühr, keine Mindestmenge, kein Abo – die komplette Preisl
 
 Serienbriefe sind das Arbeitspferd der Geschäftspost – von der Preisanpassung über die Mitgliederinfo bis zum [Direktmailing an Neukunden](/blog/direktmailing-guide). Mit einem Online-Briefdienst schrumpft der Aufwand von Stunden auf Minuten: Liste importieren, Brief schreiben, Platzhalter setzen, versenden.
 
-Probieren Sie es aus: [Kostenlos bei versendio registrieren](https://app.versendio.de/register), Testliste importieren – und der nächste Serienbrief verlässt das Haus, ohne dass Sie einen Drucker anfassen.
+Probieren Sie es aus: [Kostenlos bei versendio registrieren](https://app.versendio.de/registrieren), Testliste importieren – und der nächste Serienbrief verlässt das Haus, ohne dass Sie einen Drucker anfassen.

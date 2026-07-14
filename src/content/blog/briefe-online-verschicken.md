@@ -10,7 +10,7 @@ faq:
   - q: "Kann ich Briefe komplett online verschicken, ohne selbst zu drucken?"
     a: "Ja. Bei einem Online-Briefdienst wie versendio laden Sie Ihr Dokument hoch oder erstellen es im Editor – Druck, Kuvertierung, Porto und Übergabe an die Zustellung übernimmt der Dienst. Der Empfänger erhält einen ganz normalen Brief aus Papier."
   - q: "Was kostet es, einen Brief online zu verschicken?"
-    a: "Ein Standardbrief kostet bei versendio ab 1,19 € netto – inklusive Porto, Druck und Kuvertierung. Es gibt keine Grundgebühr: Sie zahlen nur für tatsächlich versendete Briefe."
+    a: "Ein Standardbrief kostet bei versendio ab 1,10 € netto – inklusive Porto, Druck und Kuvertierung. Es gibt keine Grundgebühr: Sie zahlen nur für tatsächlich versendete Briefe."
   - q: "Wie lange dauert der Online-Briefversand?"
     a: "Briefe werden in der Regel am nächsten Werktag gedruckt und an die Zustellung übergeben. Danach gelten die gewohnten Postlaufzeiten – insgesamt ist der Brief meist genauso schnell wie selbst eingeworfen, nur ohne eigenen Aufwand."
   - q: "Ist der Versand über einen Online-Dienst sicher?"
@@ -49,7 +49,7 @@ Adresse eintippen, einen Kontakt aus dem Adressbuch wählen – oder eine ganze 
 
 ### 3. Versandoptionen festlegen
 
-Graustufen oder Farbdruck? Normaler Brief oder Einschreiben? National oder international? Die Optionen wählen Sie pro Sendung – der Preis wird vorab transparent angezeigt.
+Graustufen oder Farbdruck? Einseitig oder beidseitig bedruckt? Die Optionen wählen Sie pro Sendung – die passende Briefart (Standard-, Kompakt- oder Großbrief) wird automatisch nach Umfang bestimmt und der Preis vorab transparent angezeigt.
 
 ### 4. Versenden und verfolgen
 
@@ -65,7 +65,7 @@ Die Preismodelle unterscheiden sich je nach Anbieter deutlich. Achten Sie auf dr
 | **Preis pro Brief** | Ist Porto enthalten? Was kosten zusätzliche Seiten und Farbdruck? |
 | **Mindestmengen** | Manche Anbieter lohnen sich erst ab hunderten Briefen pro Monat. |
 
-versendio setzt bewusst auf **Pay as you go**: Ein Standardbrief kostet ab 1,19 € netto inklusive Porto, Druck und Kuvertierung – ohne Grundgebühr und ohne Mindestmenge. Zum Vergleich: Allein das Porto für einen selbst eingeworfenen Standardbrief liegt bei 0,95 €. Rechnet man Papier, Toner, Umschlag und vor allem die Arbeitszeit dazu, ist der Online-Versand für die meisten Unternehmen die günstigere Variante. Alle Details finden Sie auf unserer [Preisseite](/preise).
+versendio setzt bewusst auf **Pay as you go**: Ein Standardbrief kostet ab 1,10 € netto inklusive Porto, Druck und Kuvertierung – ohne Grundgebühr und ohne Mindestmenge. Zum Vergleich: Allein das Porto für einen selbst eingeworfenen Standardbrief liegt bei 0,95 €. Rechnet man Papier, Toner, Umschlag und vor allem die Arbeitszeit dazu, ist der Online-Versand für die meisten Unternehmen die günstigere Variante. Alle Details finden Sie auf unserer [Preisseite](/preise).
 
 ## Die Vorteile gegenüber dem klassischen Weg
 
@@ -84,7 +84,7 @@ Kurz: für alle, die regelmäßig Post verschicken und deren Zeit Geld wert ist.
 - **Steuerberater, Verwalter & Kanzleien** halten Fristen ein, ohne den Posteingang zum Engpass zu machen.
 - **Online-Händler & SaaS-Unternehmen** erreichen Kunden auch offline – etwa mit [Direktmailings](/blog/direktmailing-guide).
 - **Vereine & Verbände** versenden Mitgliederpost als Serienbrief statt in Handarbeit.
-- **Privatpersonen** kündigen Verträge oder verschicken Behördenpost – auch als Einschreiben.
+- **Privatpersonen** kündigen Verträge oder verschicken Behördenpost – fristgerecht und ohne Druckerstress.
 
 ## Rechtliches und Datenschutz: Darauf sollten Sie achten
 
@@ -100,4 +100,4 @@ Ausführlich behandeln wir das Thema im Beitrag [DSGVO-konformer Briefversand](/
 
 Briefe online zu verschicken ist keine Zukunftstechnologie, sondern gelebter Alltag in tausenden Unternehmen: Dokument hochladen oder im Editor erstellen, Empfänger wählen, versenden – fertig. Die Post kommt wie gewohnt an, nur Ihr Aufwand verschwindet.
 
-Wenn Sie es ausprobieren möchten: Bei [versendio](https://app.versendio.de/register) registrieren Sie sich kostenlos und zahlen nur, was Sie tatsächlich versenden – Ihr erster Brief ist in wenigen Minuten unterwegs.
+Wenn Sie es ausprobieren möchten: Bei [versendio](https://app.versendio.de/registrieren) registrieren Sie sich kostenlos und zahlen nur, was Sie tatsächlich versenden – Ihr erster Brief ist in wenigen Minuten unterwegs.
