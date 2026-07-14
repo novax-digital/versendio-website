@@ -25,7 +25,7 @@ Zentrale Fakten:
 
 - Standardbrief ab ${formatEuro(PRICES.standardLetter)} netto je Brief – inklusive Porto (Deutsche Post), Druck und Kuvertierung; Farbdruck ab ${formatEuro(PRICES.standardLetterColor)}
 - Briefarten: ${LETTER_TIERS.map((t) => t.name).join(', ')} – automatisch passend zum Umfang gewählt; jedes weitere Blatt ab ${formatEuro(EXTRA_SHEET.bwSimplex)}
-- Alle Preise netto zzgl. 19 % USt.; Guthaben-Aufladung per Kreditkarte oder SEPA (Stripe), optionale automatische Aufladung
+- Alle Preise netto zzgl. 19 % USt.; Guthaben-Aufladung per Kreditkarte, PayPal, Apple Pay, Google Pay oder Klarna (Stripe), optionale automatische Aufladung
 - Funktionen: Brief-Editor mit KI-Entwurf und Platzhaltern, eigenes Briefpapier, PDF-Upload, Adressbuch, CSV/Excel-Import, Serienbriefe, Sendungsverfolgung, Transaktionsübersicht mit Belegen, API-Anbindung
 - DSGVO-konform: verschlüsselte Übertragung, Auftragsverarbeitung (AVV) für Geschäftskunden
 - Die Anwendung läuft unter ${SITE.appUrl} (Registrierung: ${SITE.appRegister})
