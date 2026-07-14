@@ -1,0 +1,239 @@
+---
+import MockShell from './MockShell.astro';
+import Icon from '../Icon.astro';
+
+/**
+ * Mockup der Flows-Funktion: automatisierter Briefversand als
+ * Pipeline (Quelle → Zeitpunkt → Brief) – rein in HTML/CSS.
+ */
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+---
+
+<MockShell active="flows" class={cls}>
+  <div class="head">
+    <div>
+      <p class="crumb">Flows /</p>
+      <p class="m-h1">Willkommensbrief Neukunden</p>
+    </div>
+    <span class="m-badge ok"><span class="pulse"></span> Aktiv</span>
+  </div>
+
+  <div class="pipeline">
+    <div class="step m-card">
+      <span class="step-icon"><Icon name="users" size={14} /></span>
+      <div class="step-body">
+        <p class="step-title">1 · Quelle</p>
+        <p class="step-text">Neuer Kontakt in Liste <b>„Neukunden“</b></p>
+        <div class="chips">
+          <span class="chip">Manuell</span>
+          <span class="chip">CSV-Import</span>
+          <span class="chip">REST-API</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step m-card">
+      <span class="step-icon"><Icon name="clock" size={14} /></span>
+      <div class="step-body">
+        <p class="step-title">2 · Zeitpunkt</p>
+        <p class="step-text"><b>1 Tag</b> nach Eintritt in die Liste</p>
+      </div>
+    </div>
+
+    <div class="step m-card">
+      <span class="step-icon"><Icon name="mail" size={14} /></span>
+      <div class="step-body">
+        <p class="step-title">3 · Brief & Optionen</p>
+        <p class="step-text"><b>Willkommensbrief</b> · 1 Blatt · Standardabsender</p>
+        <div class="opts">
+          <span class="opt"><span class="toggle off"></span> Farbdruck</span>
+          <span class="opt"><span class="toggle"></span> Beidseitig drucken</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-card stats">
+    <span class="stats-item">
+      <Icon name="send" size={13} />
+      <b>128</b> Briefe automatisch versendet
+    </span>
+    <span class="stats-last">Zuletzt: heute, 09:12 Uhr</span>
+  </div>
+</MockShell>
+
+<style>
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1em;
+    margin-bottom: 1.2em;
+  }
+  .crumb {
+    font-size: 0.85em;
+    color: var(--slate-400);
+    margin: 0 0 0.1em;
+  }
+  .head :global(.m-h1) {
+    margin: 0;
+    font-size: 1.4em;
+  }
+  .pulse {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--green-600);
+    display: inline-block;
+  }
+
+  .pipeline {
+    position: relative;
+    display: grid;
+    gap: 0.9em;
+    margin-bottom: 1em;
+  }
+  /* Verbindungslinie zwischen den Schritten */
+  .pipeline::before {
+    content: '';
+    position: absolute;
+    left: 2.05em;
+    top: 1.5em;
+    bottom: 1.5em;
+    width: 2px;
+    background: var(--blue-100);
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    gap: 0.9em;
+    padding: 0.95em 1.1em;
+  }
+  .step-icon {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1em;
+    height: 2.1em;
+    border-radius: 0.6em;
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+  }
+  .step-icon :global(svg) {
+    width: 1.1em;
+    height: 1.1em;
+  }
+  .step-body {
+    min-width: 0;
+  }
+  .step-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.78em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--slate-400);
+    margin: 0 0 0.25em;
+  }
+  .step-text {
+    font-size: 0.95em;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  .step-text b {
+    color: var(--ink);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin-top: 0.55em;
+  }
+  .chip {
+    font-size: 0.75em;
+    font-weight: 700;
+    color: var(--blue-deep);
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    border-radius: 999px;
+    padding: 0.2em 0.75em;
+    white-space: nowrap;
+  }
+
+  .opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1em;
+    margin-top: 0.6em;
+  }
+  .opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-size: 0.85em;
+    color: var(--slate-600);
+  }
+  .toggle {
+    width: 2em;
+    height: 1.15em;
+    border-radius: 999px;
+    background: var(--blue);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 0.13em;
+    right: 0.13em;
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .toggle.off {
+    background: var(--slate-300);
+  }
+  .toggle.off::after {
+    right: auto;
+    left: 0.13em;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+    padding: 0.85em 1.1em;
+  }
+  .stats-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.95em;
+    color: var(--slate-600);
+  }
+  .stats-item :global(svg) {
+    color: var(--blue);
+    width: 1.1em;
+    height: 1.1em;
+  }
+  .stats-item b {
+    color: var(--ink);
+    font-family: var(--font-head);
+  }
+  .stats-last {
+    font-size: 0.85em;
+    color: var(--slate-400);
+  }
+</style>

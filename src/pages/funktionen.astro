@@ -8,11 +8,12 @@ import MockEditor from '../components/mockups/MockEditor.astro';
 import MockContacts from '../components/mockups/MockContacts.astro';
 import MockCredit from '../components/mockups/MockCredit.astro';
 import MockDashboard from '../components/mockups/MockDashboard.astro';
+import MockFlow from '../components/mockups/MockFlow.astro';
 import { SITE } from '../data/site';
 
-const title = 'Funktionen: Brief-Editor, Leadlisten-Import, API & mehr | versendio';
+const title = 'Funktionen: Brief-Editor, Flows, Leadlisten-Import & API | versendio';
 const description =
-  'Alle versendio-Funktionen im Überblick: Brief-Editor mit KI-Entwurf, PDF-Upload, CSV/Excel-Import für Leadlisten, Serienbriefe, Sendungsverfolgung, Prepaid-Guthaben & API.';
+  'Alle versendio-Funktionen im Überblick: Brief-Editor mit KI-Entwurf, Flows für automatischen Versand, PDF-Upload, CSV/Excel-Import für Leadlisten, Serienbriefe, Sendungsverfolgung, Prepaid-Guthaben & API.';
 
 const breadcrumbLd = {
   '@type': 'BreadcrumbList',
@@ -85,6 +86,14 @@ const featureTable = [
     ],
   },
   {
+    group: 'Automatisierung',
+    rows: [
+      ['Flows', 'Neue Kontakte einer Liste erhalten zeitversetzt automatisch den hinterlegten Brief'],
+      ['Flow-Quellen', 'Manuelle Eingabe, CSV-Import oder REST-API – jeder Neuzugang startet den Flow'],
+      ['API-Anbindung', 'Briefversand direkt aus eigenen Systemen auslösen'],
+    ],
+  },
+  {
     group: 'Versand & Kosten',
     rows: [
       ['Briefarten', 'Standard-, Kompakt- und Großbrief – automatisch passend zum Umfang'],
@@ -92,7 +101,6 @@ const featureTable = [
       ['Prepaid-Guthaben', 'Aufladen per Kreditkarte, PayPal, Apple Pay, Google Pay oder Klarna – bezahlt wird nur der tatsächliche Versand'],
       ['Automatische Aufladung', 'Guthaben lädt sich bei Unterschreiten eines Schwellwerts selbst nach'],
       ['Transaktionen & Belege', 'Lückenlose Übersicht für Ihre Buchhaltung'],
-      ['API-Anbindung', 'Briefversand aus eigenen Systemen automatisieren'],
     ],
   },
 ] as const;
@@ -105,7 +113,7 @@ const featureTable = [
         as="h1"
         eyebrow="Funktionen"
         title="Alles für den Briefversand – <em>an einem Ort</em>"
-        lead="versendio bündelt den kompletten Weg der Geschäftspost: erstellen, personalisieren, versenden, verfolgen und abrechnen. Das sind die Funktionen im Detail."
+        lead="versendio bündelt den kompletten Weg der Geschäftspost: erstellen, personalisieren, versenden, automatisieren, verfolgen und abrechnen. Das sind die Funktionen im Detail."
       />
       <div class="hero-mock">
         <MockDashboard />
@@ -144,6 +152,23 @@ const featureTable = [
       >
         <MockContacts />
       </FeatureSplit>
+
+      <div id="flows">
+        <FeatureSplit
+          eyebrow="Neu · Flows"
+          title="Einmal einrichten, automatisch versenden"
+          text="Flows verbinden Ihre Kontaktlisten mit dem Briefversand: Jeder neue Kontakt startet den Flow und erhält nach der eingestellten Wartezeit automatisch den hinterlegten Brief – gedruckt, kuvertiert und zugestellt wie gewohnt."
+          bullets={[
+            '<strong>Quelle:</strong> Kontakte per manueller Eingabe, CSV-Import oder REST-API – jeder Neuzugang löst den Flow aus',
+            '<strong>Kontaktliste:</strong> automatisch angelegt oder bestehende Liste weiterverwenden',
+            '<strong>Zeitpunkt:</strong> Verzögerung frei wählbar, z. B. 1 Tag nach Eintritt in die Liste',
+            '<strong>Brief & Optionen:</strong> Vorlage, Farbdruck, beidseitiger Druck und Absender fest hinterlegt',
+            '<strong>Typische Einsätze:</strong> Willkommensbriefe, Onboarding-Strecken, Follow-ups nach Messen',
+          ]}
+        >
+          <MockFlow />
+        </FeatureSplit>
+      </div>
     </div>
   </section>
 
@@ -173,6 +198,7 @@ const featureTable = [
   <section class="section" id="guthaben">
     <div class="container feature-stack">
       <FeatureSplit
+        reverse
         eyebrow="Guthaben & Abrechnung"
         title="Ihre Portokasse in der Cloud"
         text="Guthaben aufladen, versenden, fertig. Jede Transaktion ist dokumentiert, jede Aufladung kommt mit Beleg – und die automatische Aufladung sorgt dafür, dass wichtige Post nie am Guthaben scheitert."

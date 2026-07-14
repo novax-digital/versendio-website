@@ -7,6 +7,7 @@ import FAQ from '../components/FAQ.astro';
 import CTABand from '../components/CTABand.astro';
 import MockDashboard from '../components/mockups/MockDashboard.astro';
 import MockEditor from '../components/mockups/MockEditor.astro';
+import MockFlow from '../components/mockups/MockFlow.astro';
 import MockContacts from '../components/mockups/MockContacts.astro';
 import MockCredit from '../components/mockups/MockCredit.astro';
 import { SITE } from '../data/site';
@@ -121,6 +122,10 @@ const faqItems = [
   {
     q: 'Kann ich Serienbriefe an viele Empfänger gleichzeitig senden?',
     a: 'Ja. Importieren Sie Ihre Empfängerliste als CSV- oder Excel-Datei oder nutzen Sie Ihr Adressbuch in versendio. Platzhalter wie Anrede, Name und Firma personalisieren jeden einzelnen Brief automatisch – ideal für Mailings, Kundeninfos und Kampagnen.',
+  },
+  {
+    q: 'Kann ich den Briefversand komplett automatisieren?',
+    a: 'Ja, mit Flows: Sobald ein neuer Kontakt in eine Liste gelangt – manuell, per CSV-Import oder über die REST-API – versendet versendio nach einer von Ihnen festgelegten Verzögerung automatisch den hinterlegten Brief. Ideal für Willkommensbriefe, Onboarding-Post und wiederkehrende Anschreiben.',
   },
   {
     q: 'Wie schnell werden meine Briefe verschickt?',
@@ -250,6 +255,22 @@ const faqItems = [
 
       <FeatureSplit
         reverse
+        eyebrow="Neu · Flows"
+        title="Briefversand auf Autopilot"
+        text="Mit Flows wird Post zum Automatismus: Sobald ein neuer Kontakt in einer Liste landet – manuell, per CSV-Import oder über die API – erhält er zeitversetzt automatisch Ihren Brief. Einmal einrichten, nie wieder daran denken."
+        bullets={[
+          '<strong>Automatischer Start:</strong> Jeder neue Kontakt in der Liste löst den Flow aus',
+          '<strong>Zeitpunkt frei wählbar:</strong> z. B. 1 Tag nach Eintritt in die Liste',
+          '<strong>Einmal festlegen:</strong> Briefvorlage, Farbdruck, beidseitiger Druck & Absender',
+          '<strong>Perfekt für:</strong> Willkommensbriefe, Onboarding-Post & Follow-ups nach Events',
+        ]}
+        linkHref="/funktionen#flows"
+        linkLabel="Mehr zu Flows"
+      >
+        <MockFlow />
+      </FeatureSplit>
+
+      <FeatureSplit
         eyebrow="Kontakte & Leadlisten"
         title="Leadlisten importieren statt Adressen abtippen"
         text="Bringen Sie Ihre Empfänger in Sekunden in die Plattform: per CSV- oder Excel-Import, aus dem Adressbuch oder als gepflegte Kontaktliste für wiederkehrende Kampagnen."
@@ -266,6 +287,7 @@ const faqItems = [
       </FeatureSplit>
 
       <FeatureSplit
+        reverse
         eyebrow="Guthaben & Kosten"
         title="Volle Kostenkontrolle mit Prepaid-Guthaben"
         text="versendio funktioniert wie eine Portokasse in der Cloud: Guthaben aufladen, Briefe versenden, jede Transaktion nachvollziehen. Ohne Abo, ohne versteckte Kosten."
