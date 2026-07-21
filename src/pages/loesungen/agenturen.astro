@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import FeatureSplit from '../../components/FeatureSplit.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTABand from '../../components/CTABand.astro';
+import MockFlow from '../../components/mockups/MockFlow.astro';
+import MockEditor from '../../components/mockups/MockEditor.astro';
+import { SITE } from '../../data/site';
+import { PRICES, formatEuro } from '../../data/pricing';
+
+const title = 'versendio für Agenturen: Onboarding & Kundenpost automatisieren | versendio';
+const description =
+  'So nutzen Agenturen versendio: Onboarding-Formulare und Willkommenspost automatisch per Flow versenden, Weiterempfehlungsschreiben verschicken und Mailings im eigenen Briefpapier – ohne Drucker und Kuvertier-Marathon.';
+
+const breadcrumbLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Lösungen', item: `${SITE.url}/loesungen` },
+    { '@type': 'ListItem', position: 3, name: 'Agenturen', item: `${SITE.url}/loesungen/agenturen` },
+  ],
+};
+
+const useCases = [
+  {
+    icon: 'file-text',
+    title: 'Onboarding-Formulare',
+    text: 'Neue Kunden erhalten automatisch Willkommensmappe, Onboarding-Formular oder Vertragsunterlagen – wenige Tage nach Projektstart im Briefkasten.',
+  },
+  {
+    icon: 'users',
+    title: 'Weiterempfehlungsschreiben',
+    text: 'Nach Projektabschluss geht automatisch ein persönliches Empfehlungsschreiben raus – der charmante Anstoß für die nächste Kundenempfehlung.',
+  },
+  {
+    icon: 'mail',
+    title: 'Willkommens- & Dankespost',
+    text: 'Ein Brief zum Projektstart, Jubiläum oder Jahresende bleibt hängen – persönlicher als jede E-Mail und ganz ohne Kuvertier-Marathon.',
+  },
+  {
+    icon: 'pen',
+    title: 'Briefpapier & Corporate Design',
+    text: 'Eigenes Briefpapier mit Logo, Schriften und Fußzeile hinterlegen – jede Sendung sieht aus wie aus Ihrem Haus.',
+  },
+] as const;
+
+const faqItems = [
+  {
+    q: 'Können wir Briefe im Namen unserer Kunden versenden?',
+    a: 'Ja. In versendio lassen sich mehrere Absenderadressen hinterlegen, aus denen Sie je Sendung wählen – praktisch für Aktionen, die Sie im Auftrag Ihrer Kunden umsetzen.',
+  },
+  {
+    q: 'Wie kommt ein neuer Kunde in den Onboarding-Flow?',
+    a: 'Sie tragen ihn manuell in die verknüpfte Kontaktliste ein, importieren ihn per CSV oder legen ihn automatisch über die REST-API an – zum Beispiel aus Ihrem CRM. Jeder Neuzugang startet den Flow von selbst.',
+  },
+  {
+    q: 'Was kostet versendio für Agenturen?',
+    a: `Es gibt keine Grundgebühr und kein Abo: Sie zahlen nur pro versendetem Brief, ab ${formatEuro(PRICES.standardLetter)} netto inklusive Porto, Druck und Kuvertierung. Alle Details finden Sie auf der Preisseite.`,
+  },
+];
+---
+
+<BaseLayout title={title} description={description} jsonLd={[breadcrumbLd]}>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHead
+        as="h1"
+        eyebrow="Lösungen · Agenturen"
+        title="Kunden-Onboarding & Agentur-Post <em>auf Autopilot</em>"
+        lead="Ein Brief fällt auf, wo E-Mails untergehen. Agenturen nutzen versendio, um neue Kunden professionell zu begrüßen, Weiterempfehlungen anzustoßen und mit der eigenen Marke sichtbar zu bleiben – vollautomatisch mit Flows."
+      />
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href={SITE.appRegister} rel="noopener">
+          Kostenlos starten <Icon name="arrow-right" size={19} />
+        </a>
+        <a class="btn btn-secondary btn-lg" href="/preise">Preise ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        eyebrow="Typische Einsätze"
+        title="Post, die bei Ihren Kunden <em>hängen bleibt</em>"
+      />
+      <div class="icon-grid">
+        {
+          useCases.map((uc) => (
+            <div class="icon-card card">
+              <span class="ic"><Icon name={uc.icon} size={22} /></span>
+              <h3>{uc.title}</h3>
+              <p>{uc.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container feature-stack">
+      <FeatureSplit
+        eyebrow="Flows für Agenturen"
+        title="Onboarding-Post einmal einrichten – für jeden neuen Kunden"
+        text="Legen Sie einen Flow auf Ihre Liste „Neukunden“: Sobald Sie einen Kunden eintragen – manuell oder automatisch über die REST-API, etwa aus Ihrem CRM – verschickt versendio nach der eingestellten Wartezeit den hinterlegten Brief."
+        bullets={[
+          '<strong>Onboarding-Formulare</strong> unterschriftsreif im Briefkasten des Kunden',
+          '<strong>Weiterempfehlungs-Flow:</strong> z. B. 30 Tage nach Projektabschluss automatisch anstoßen',
+          '<strong>Zeitpunkt frei wählbar</strong> – vom nächsten Tag bis Wochen später',
+          '<strong>Jeder Versand dokumentiert:</strong> Status live im Dashboard',
+        ]}
+        linkHref="/funktionen#flows"
+        linkLabel="Mehr zu Flows"
+      >
+        <MockFlow />
+      </FeatureSplit>
+
+      <FeatureSplit
+        reverse
+        eyebrow="Editor & Briefpapier"
+        title="Ihre Marke auf jedem Blatt"
+        text="Hinterlegen Sie Briefpapier mit Logo, Schriften und Fußzeile einmal zentral. Im Editor entsteht daraus in Minuten ein persönlicher Brief – auf Wunsch mit KI-Entwurf und Platzhaltern für Anrede, Name und Firma."
+        bullets={[
+          '<strong>KI-Entwurf:</strong> aus Stichworten wird ein fertiger Brieftext',
+          '<strong>Platzhalter</strong> personalisieren jeden Empfänger automatisch',
+          '<strong>PDF-Upload:</strong> fertige Unterlagen aus InDesign & Co. direkt versenden',
+        ]}
+        linkHref="/funktionen"
+        linkLabel="Alle Funktionen"
+      >
+        <MockEditor />
+      </FeatureSplit>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead eyebrow="FAQ" title="Häufige Fragen von Agenturen" />
+      <FAQ items={faqItems} />
+    </div>
+  </section>
+
+  <CTABand
+    title="Der nächste Neukunde bekommt Post."
+    text="Registrieren Sie sich kostenlos und richten Sie Ihren ersten Onboarding-Flow in wenigen Minuten ein – bezahlt wird nur, was Sie versenden."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: clamp(3rem, 2rem + 3vw, 5rem) 0 clamp(1rem, 1rem + 1vw, 2rem);
+    background:
+      radial-gradient(700px 420px at 50% -20%, var(--blue-050) 0%, transparent 65%),
+      linear-gradient(180deg, #fdfdff 0%, #ffffff 100%);
+  }
+  .page-hero :global(.section-head) {
+    margin-bottom: 1.8rem;
+  }
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+  }
+  .icon-card {
+    padding: 1.7rem 1.5rem 1.5rem;
+  }
+  .ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 11px;
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .icon-card h3 {
+    font-size: 1.08rem;
+    margin-bottom: 0.35rem;
+  }
+  .icon-card p {
+    font-size: 0.96rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  @media (max-width: 980px) {
+    .icon-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .icon-grid { grid-template-columns: 1fr; }
+  }
+
+  .feature-stack {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+</style>

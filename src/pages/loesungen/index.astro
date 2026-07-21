@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import CTABand from '../../components/CTABand.astro';
+import { SITE } from '../../data/site';
+
+const title = 'Lösungen: Briefversand für Agenturen, Vertrieb, Buchhaltung & Software | versendio';
+const description =
+  'So setzen Unternehmen versendio ein: Kunden-Onboarding in Agenturen, Sales-Briefe mit Follow-up-Flows, automatischer Rechnungs- & Mahnungsversand und White-Label-Briefversand per API für Software-Anbieter.';
+
+const breadcrumbLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Lösungen', item: `${SITE.url}/loesungen` },
+  ],
+};
+
+const solutions = [
+  {
+    icon: 'sparkles',
+    title: 'Agenturen',
+    href: '/loesungen/agenturen',
+    text: 'Onboarding-Unterlagen, Weiterempfehlungsschreiben und Kundenpost im eigenen Briefpapier – mit Flows wird wiederkehrende Agentur-Post zum Selbstläufer.',
+    bullets: [
+      'Onboarding-Formulare automatisch versenden',
+      'Weiterempfehlungsschreiben nach Projektabschluss',
+      'Kundenpost im eigenen Corporate Design',
+    ],
+  },
+  {
+    icon: 'chart',
+    title: 'Vertrieb & Sales',
+    href: '/loesungen/vertrieb',
+    text: 'Der Brief als Türöffner: Adresslisten anschreiben, in mehreren Stufen nachfassen und den perfekten Zeitpunkt für den Anruf kennen.',
+    bullets: [
+      'Leadlisten per CSV/Excel importieren',
+      'Mehrere Briefe in frei gewählten Zeitabständen',
+      'Zustellstatus live im Blick – warm nachtelefonieren',
+    ],
+  },
+  {
+    icon: 'euro',
+    title: 'Rechnungswesen',
+    href: '/loesungen/rechnungswesen',
+    text: 'Rechnungen, Angebote und Mahnungen automatisch als Brief – direkt aus Buchhaltung, ERP oder Fakturierung per REST-API angebunden.',
+    bullets: [
+      'Rechnungs- & Mahnläufe automatisch postalisch',
+      'Anbindung per REST-API oder PDF-Upload',
+      'Belege & Sendungsstatus für die Buchhaltung',
+    ],
+  },
+  {
+    icon: 'zap',
+    title: 'Software-Anbieter & SaaS',
+    href: '/loesungen/software-anbieter',
+    text: 'Briefversand als Feature Ihrer eigenen Software: White Label per REST-API, mit Verbrauchswerten und Abrechnung je Endkunde – gegen Aufpreis.',
+    bullets: [
+      'Briefe per API aus der eigenen Anwendung versenden',
+      'Endkunden anlegen & Verbrauch je Kunde abrufen',
+      'Pay as you go – an Endkunden weiterberechenbar',
+    ],
+  },
+] as const;
+---
+
+<BaseLayout title={title} description={description} jsonLd={[breadcrumbLd]}>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHead
+        as="h1"
+        eyebrow="Lösungen"
+        title="Ein Briefversand, <em>viele Einsatzmöglichkeiten</em>"
+        lead="Ob Agentur, Vertriebsteam, Buchhaltung oder eigene Software: Überall, wo Post zuverlässig ankommen muss, übernimmt versendio Druck, Kuvertierung und Zustellung. Vier typische Szenarien im Überblick."
+      />
+    </div>
+  </section>
+
+  <section class="section solutions-section">
+    <div class="container">
+      <div class="solution-grid">
+        {
+          solutions.map((s) => (
+            <a class="solution card" href={s.href}>
+              <span class="sol-icon"><Icon name={s.icon} size={24} /></span>
+              <h2>{s.title}</h2>
+              <p>{s.text}</p>
+              <ul>
+                {s.bullets.map((b) => (
+                  <li>
+                    <Icon name="check" size={16} strokeWidth={2.6} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <span class="sol-link">
+                Mehr erfahren <Icon name="arrow-right" size={17} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container contact-band card">
+      <div>
+        <h2>Ihr Einsatzfall ist nicht dabei?</h2>
+        <p>
+          versendio ist bewusst flexibel gebaut – vom einzelnen Geschäftsbrief bis zur
+          API-Anbindung mit größeren Volumen. Erzählen Sie uns kurz, was Sie vorhaben,
+          und wir sagen Ihnen, wie es mit versendio funktioniert.
+        </p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href={`mailto:${SITE.email}`}>
+          <Icon name="mail" size={18} /> Sprechen Sie uns an
+        </a>
+        <a class="btn btn-secondary" href={SITE.phoneHref}>
+          <Icon name="phone" size={18} /> {SITE.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABand
+    title="Am schnellsten überzeugt der erste Brief."
+    text="Registrieren Sie sich kostenlos und probieren Sie Ihren Einsatzfall direkt aus – bezahlt wird nur, was Sie wirklich versenden."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: clamp(3rem, 2rem + 3vw, 5rem) 0 0;
+    background:
+      radial-gradient(700px 420px at 50% -20%, var(--blue-050) 0%, transparent 65%),
+      linear-gradient(180deg, #fdfdff 0%, #ffffff 100%);
+  }
+  .page-hero :global(.section-head) {
+    margin-bottom: 0;
+  }
+
+  .solutions-section {
+    padding-top: clamp(2.2rem, 2rem + 2vw, 3.6rem);
+  }
+  .solution-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+  .solution {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: clamp(1.7rem, 1.4rem + 1vw, 2.4rem);
+    color: inherit;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .solution:hover {
+    text-decoration: none;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--blue-200);
+  }
+  .sol-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+    margin-bottom: 1.1rem;
+  }
+  .solution h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.4rem;
+  }
+  .solution > p {
+    color: var(--slate-600);
+    font-size: 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .solution ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.3rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .solution li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.96rem;
+    color: var(--slate-700);
+  }
+  .solution li :global(svg) {
+    color: var(--green-600);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .sol-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: auto;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--blue);
+  }
+  .sol-link :global(svg) {
+    transition: transform 0.18s ease;
+  }
+  .solution:hover .sol-link :global(svg) {
+    transform: translateX(4px);
+  }
+  @media (max-width: 860px) {
+    .solution-grid {
+      grid-template-columns: 1fr;
+      max-width: 620px;
+      margin-inline: auto;
+    }
+  }
+
+  .contact-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: clamp(1.8rem, 1.5rem + 1.5vw, 2.8rem);
+    border-radius: var(--r-xl);
+  }
+  .contact-band h2 {
+    font-size: clamp(1.35rem, 1.2rem + 0.8vw, 1.7rem);
+    margin-bottom: 0.35em;
+  }
+  .contact-band p {
+    color: var(--slate-600);
+    max-width: 56ch;
+    margin: 0;
+  }
+  .contact-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+</style>

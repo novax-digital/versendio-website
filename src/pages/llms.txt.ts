@@ -28,6 +28,7 @@ Zentrale Fakten:
 - Alle Preise netto zzgl. 19 % USt.; Guthaben-Aufladung per Kreditkarte, PayPal, Apple Pay, Google Pay oder Klarna (Stripe), optionale automatische Aufladung
 - Funktionen: Brief-Editor mit KI-Entwurf und Platzhaltern, eigenes Briefpapier, PDF-Upload, Adressbuch, CSV/Excel-Import, Serienbriefe, Sendungsverfolgung, Transaktionsübersicht mit Belegen, API-Anbindung
 - Flows (Automatisierung): Neue Kontakte einer Liste – per manueller Eingabe, CSV-Import oder REST-API – erhalten nach frei wählbarer Verzögerung (z. B. 1 Tag) automatisch einen hinterlegten Brief; ideal für Willkommensbriefe und Onboarding-Post
+- White Label & REST-API für Software-Anbieter: Briefversand aus der eigenen Anwendung (Basis-URL ${SITE.appUrl}/api/v1, Authentifizierung per Bearer-Token), Endkunden-Verwaltung mit Briefen und Kosten je Endkunde, Pay as you go je Endkunde – Whitelabel-Modul als Erweiterung gegen Aufpreis (Konditionen auf Anfrage)
 - DSGVO-konform: verschlüsselte Übertragung, Auftragsverarbeitung (AVV) für Geschäftskunden
 - Die Anwendung läuft unter ${SITE.appUrl} (Registrierung: ${SITE.appRegister})
 
@@ -35,6 +36,11 @@ Zentrale Fakten:
 
 - [Startseite](${site}/): Überblick über Produkt, Ablauf und Vorteile des Online-Briefversands
 - [Funktionen](${site}/funktionen): Alle Funktionen im Detail – Editor, Kontakte & Leadlisten, Versand, Guthaben, Sicherheit
+- [Lösungen](${site}/loesungen): Einsatzmöglichkeiten im Überblick – für Agenturen, Vertrieb, Rechnungswesen und Software-Anbieter
+- [Lösungen: Agenturen](${site}/loesungen/agenturen): Kunden-Onboarding, Weiterempfehlungsschreiben und Kundenpost mit Flows automatisieren
+- [Lösungen: Vertrieb & Sales](${site}/loesungen/vertrieb): Adresslisten als Türöffner anschreiben, mehrstufige Follow-up-Flows, Zustellstatus als Anruf-Timing
+- [Lösungen: Rechnungswesen](${site}/loesungen/rechnungswesen): Rechnungen, Angebote und Mahnungen automatisch per Post – Anbindung von Buchhaltung/ERP per REST-API
+- [Lösungen: Software-Anbieter & SaaS](${site}/loesungen/software-anbieter): White-Label-Briefversand per API mit Abrechnung je Endkunde (gegen Aufpreis)
 - [Preise](${site}/preise): Vollständige Preisliste aller Briefarten und Druckvarianten, Beispielrechnungen, Abrechnungs-FAQ
 - [Blog](${site}/blog): Praxiswissen zu Briefversand, Serienbriefen, Rechnungsversand und Direktmailings
 

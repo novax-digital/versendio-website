@@ -1,0 +1,264 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import FeatureSplit from '../../components/FeatureSplit.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTABand from '../../components/CTABand.astro';
+import MockWhitelabel from '../../components/mockups/MockWhitelabel.astro';
+import MockApi from '../../components/mockups/MockApi.astro';
+import { SITE } from '../../data/site';
+import { PRICES, formatEuro } from '../../data/pricing';
+
+const title = 'White-Label-Briefversand per API für Software & SaaS | versendio';
+const description =
+  'Bieten Sie Briefversand direkt in Ihrer eigenen Software an: REST-API-Anbindung, White-Label-Endkundenverwaltung mit Verbrauchswerten je Kunde und Pay-as-you-go-Abrechnung – verfügbar gegen Aufpreis.';
+
+const breadcrumbLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Lösungen', item: `${SITE.url}/loesungen` },
+    { '@type': 'ListItem', position: 3, name: 'Software-Anbieter & SaaS', item: `${SITE.url}/loesungen/software-anbieter` },
+  ],
+};
+
+const benefits = [
+  {
+    icon: 'zap',
+    title: 'Feature statt Projekt',
+    text: 'Briefversand wird zum Bestandteil Ihres Produkts – ohne eigene Druckstraße, Portokasse oder Post-Logistik.',
+  },
+  {
+    icon: 'building',
+    title: 'Transparenz je Endkunde',
+    text: 'Jede Sendung ist einem Endkunden zugeordnet: Briefe und Kosten pro Monat rufen Sie je Kunde ab.',
+  },
+  {
+    icon: 'coins',
+    title: 'Faire Abrechnung',
+    text: 'Pay as you go je Endkunde – Sie berechnen den Versand 1:1 oder mit eigener Marge an Ihre Kunden weiter.',
+  },
+] as const;
+
+const faqItems = [
+  {
+    q: 'Was kostet das Whitelabel-Modul?',
+    a: `Das Whitelabel-Modul ist als Erweiterung gegen Aufpreis erhältlich – die Konditionen stimmen wir individuell auf Ihr Volumen ab. Der Versand selbst bleibt Pay as you go ab ${formatEuro(PRICES.standardLetter)} netto pro Brief. Kontaktieren Sie uns für ein Angebot.`,
+  },
+  {
+    q: 'Wie rechne ich den Briefversand mit meinen Kunden ab?',
+    a: 'Sie sehen für jeden Endkunden die versendeten Briefe und die angefallenen Kosten pro Monat. Diese Verbrauchswerte berechnen Sie 1:1 oder mit Ihrer eigenen Marge weiter – die Datenbasis liefert versendio.',
+  },
+  {
+    q: 'Wie aufwendig ist die Integration?',
+    a: 'Die REST-API ist bewusst schlank gehalten: API-Schlüssel erzeugen, Basis-URL ansprechen, fertig. Die Dokumentation mit Beispielaufrufen finden Sie direkt in der App unter Einstellungen → Integrationen.',
+  },
+  {
+    q: 'Merken meine Kunden, dass versendio dahintersteht?',
+    a: 'Ihre Kunden bleiben in Ihrer Anwendung: Der Versand läuft im Hintergrund über die API. Endkunden legen Sie per Klick oder API an – ein eigenes versendio-Konto brauchen Ihre Kunden nicht.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} jsonLd={[breadcrumbLd]}>
+  <section class="page-hero">
+    <div class="container">
+      <span class="badge hero-badge">
+        <Icon name="sparkles" size={15} /> Neu · White Label für SaaS
+      </span>
+      <SectionHead
+        as="h1"
+        eyebrow="Lösungen · Software-Anbieter"
+        title="Briefversand als Feature <em>Ihrer eigenen Software</em>"
+        lead="Ihre Kunden erzeugen Dokumente in Ihrer Anwendung – versendio bringt sie in den Briefkasten. Über die REST-API versenden Sie Briefe direkt aus Ihrer SaaS-Lösung, und mit dem Whitelabel-Modul rechnen Sie den Versand sauber je Endkunde ab."
+      />
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href={`mailto:${SITE.email}`}>
+          <Icon name="mail" size={19} /> Angebot anfragen
+        </a>
+        <a class="btn btn-secondary btn-lg" href={SITE.appRegister} rel="noopener">
+          API kostenlos testen
+        </a>
+      </div>
+      <div class="hero-mock">
+        <MockWhitelabel />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Vorteile">
+    <div class="container">
+      <div class="benefit-grid">
+        {
+          benefits.map((b) => (
+            <div class="benefit">
+              <span class="benefit-icon"><Icon name={b.icon} size={24} /></span>
+              <h2>{b.title}</h2>
+              <p>{b.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container feature-stack">
+      <FeatureSplit
+        eyebrow="White Label"
+        title="Ihre Software, Ihre Kunden – unsere Infrastruktur"
+        text="Mit dem Whitelabel-Modul legen Sie Ihre Endkunden in versendio an – per Klick oder API. Jede Sendung wird einem Endkunden zugeordnet, sodass Verbrauch und Kosten jederzeit sauber getrennt sind."
+        bullets={[
+          '<strong>Endkunden anlegen & verwalten</strong> – per Klick oder über die API',
+          '<strong>Jede Sendung zugeordnet:</strong> Briefe und Kosten pro Monat je Endkunde',
+          '<strong>Pay as you go je Endkunde</strong> – transparent an Ihre Kunden weiterberechenbar',
+          '<strong>Verfügbar gegen Aufpreis</strong> – Konditionen auf Anfrage',
+        ]}
+      >
+        <MockWhitelabel />
+      </FeatureSplit>
+
+      <FeatureSplit
+        reverse
+        eyebrow="REST-API"
+        title="Schlanke API statt wochenlanger Integration"
+        text="API-Schlüssel in den Einstellungen erzeugen, Basis-URL ansprechen, loslegen: Über die REST-API legen Sie Kontakte an und lösen den Briefversand direkt aus Ihrer Anwendung aus – per HTTPS und JSON."
+        bullets={[
+          '<strong>Basis-URL:</strong> app.versendio.de/api/v1',
+          '<strong>Authentifizierung</strong> per API-Schlüssel (Bearer-Token)',
+          '<strong>Kontakte & Briefversand per API</strong> – Dokumentation direkt in der App',
+          '<strong>Auch ohne eigene Entwicklung:</strong> anbindbar über HubSpot, Zapier oder Make',
+        ]}
+      >
+        <MockApi />
+      </FeatureSplit>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pricing-note card">
+      <div>
+        <span class="eyebrow">Konditionen</span>
+        <h2>White Label gegen Aufpreis – Versand bleibt Pay as you go</h2>
+        <p>
+          Das Whitelabel-Modul ist eine Erweiterung für Software-Anbieter und gegen
+          Aufpreis erhältlich. Der Briefversand selbst wird wie gewohnt pro Brief
+          abgerechnet – ab {formatEuro(PRICES.standardLetter)} netto inklusive Porto,
+          Druck und Kuvertierung. Sprechen Sie uns an, wir schnüren ein Paket passend
+          zu Ihrem Volumen.
+        </p>
+      </div>
+      <div class="pricing-actions">
+        <a class="btn btn-primary" href={`mailto:${SITE.email}`}>
+          <Icon name="mail" size={18} /> Angebot anfragen
+        </a>
+        <a class="btn btn-secondary" href={SITE.phoneHref}>
+          <Icon name="phone" size={18} /> {SITE.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <SectionHead eyebrow="FAQ" title="Häufige Fragen von Software-Anbietern" />
+      <FAQ items={faqItems} />
+    </div>
+  </section>
+
+  <CTABand
+    title="Machen Sie Briefversand zu Ihrem Feature."
+    text="Testen Sie die API mit einem kostenlosen Konto – und sprechen Sie mit uns über White Label für Ihre Software."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: clamp(3rem, 2rem + 3vw, 5rem) 0 0;
+    background:
+      radial-gradient(700px 420px at 50% -20%, var(--blue-050) 0%, transparent 65%),
+      linear-gradient(180deg, #fdfdff 0%, #ffffff 100%);
+    text-align: center;
+  }
+  .hero-badge {
+    margin-bottom: 1.3rem;
+  }
+  .page-hero :global(.section-head) {
+    margin-bottom: 1.8rem;
+  }
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(2.2rem, 2rem + 2vw, 3.5rem);
+  }
+  .hero-mock {
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.4rem, 1rem + 1.5vw, 2.6rem);
+  }
+  .benefit h2 {
+    font-size: 1.12rem;
+    margin: 0.9rem 0 0.4rem;
+  }
+  .benefit p {
+    font-size: 0.97rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  .benefit-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    background: var(--blue-050);
+    color: var(--blue);
+    border: 1px solid var(--blue-100);
+  }
+  @media (max-width: 900px) {
+    .benefit-grid {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+  }
+
+  .feature-stack {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .pricing-note {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: clamp(1.8rem, 1.5rem + 1.5vw, 2.8rem);
+    border-radius: var(--r-xl);
+  }
+  .pricing-note h2 {
+    font-size: clamp(1.35rem, 1.2rem + 0.8vw, 1.7rem);
+    margin-bottom: 0.35em;
+  }
+  .pricing-note p {
+    color: var(--slate-600);
+    max-width: 58ch;
+    margin: 0;
+  }
+  .pricing-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+</style>

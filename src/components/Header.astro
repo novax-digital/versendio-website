@@ -1,11 +1,14 @@
 ---
 import LogoSvg from '../assets/versendio-logo.svg';
 import Icon from './Icon.astro';
-import { SITE, NAV } from '../data/site';
+import { SITE, NAV, type NavItem } from '../data/site';
 
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isActive = (href: string) =>
   href === '/' ? pathname === '/' : pathname.startsWith(href);
+const hasChildren = (
+  item: NavItem,
+): item is Extract<NavItem, { children: unknown }> => 'children' in item;
 ---
 
 <header class="site-header">
@@ -16,15 +19,50 @@ const isActive = (href: string) =>
 
     <nav class="main-nav" aria-label="Hauptnavigation">
       {
-        NAV.map((item) => (
-          <a
-            href={item.href}
-            class:list={['nav-link', { active: isActive(item.href) }]}
-            aria-current={isActive(item.href) ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        ))
+        NAV.map((item) =>
+          hasChildren(item) ? (
+            <div class="nav-item">
+              <a
+                href={item.href}
+                class:list={['nav-link', 'has-sub', { active: isActive(item.href) }]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+                <Icon name="chevron-down" size={15} strokeWidth={2.2} class="nav-caret" />
+              </a>
+              <div class="dropdown">
+                <div class="dropdown-panel">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class:list={['dd-link', { active: isActive(child.href) }]}
+                      aria-current={isActive(child.href) ? 'page' : undefined}
+                    >
+                      <span class="dd-icon">
+                        <Icon name={child.icon} size={18} />
+                      </span>
+                      <span class="dd-copy">
+                        <span class="dd-label">{child.label}</span>
+                        <span class="dd-desc">{child.description}</span>
+                      </span>
+                    </a>
+                  ))}
+                  <a href={item.href} class="dd-all">
+                    Alle Lösungen im Überblick <Icon name="arrow-right" size={15} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={item.href}
+              class:list={['nav-link', { active: isActive(item.href) }]}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ),
+        )
       }
     </nav>
 
@@ -50,11 +88,28 @@ const isActive = (href: string) =>
   <div class="mobile-nav" id="mobile-nav" hidden>
     <nav aria-label="Mobile Navigation">
       {
-        NAV.map((item) => (
-          <a href={item.href} class:list={['mobile-link', { active: isActive(item.href) }]}>
-            {item.label}
-          </a>
-        ))
+        NAV.map((item) =>
+          hasChildren(item) ? (
+            <div class="mobile-group">
+              <a href={item.href} class:list={['mobile-link', { active: isActive(item.href) }]}>
+                {item.label}
+              </a>
+              {item.children.map((child) => (
+                <a
+                  href={child.href}
+                  class:list={['mobile-sublink', { active: isActive(child.href) }]}
+                >
+                  <Icon name={child.icon} size={16} />
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <a href={item.href} class:list={['mobile-link', { active: isActive(item.href) }]}>
+              {item.label}
+            </a>
+          ),
+        )
       }
     </nav>
     <div class="mobile-cta">
@@ -139,6 +194,120 @@ const isActive = (href: string) =>
     font-weight: 600;
   }
 
+  /* ---- Dropdown (Lösungen) ---- */
+  .nav-item {
+    position: relative;
+  }
+  .nav-link.has-sub {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .nav-link.has-sub :global(.nav-caret) {
+    color: var(--slate-400);
+    transition: transform 0.18s ease;
+  }
+  .nav-item:hover .nav-link.has-sub :global(.nav-caret),
+  .nav-item:focus-within .nav-link.has-sub :global(.nav-caret) {
+    transform: rotate(180deg);
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: -0.4rem;
+    padding-top: 0.55rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
+    z-index: 60;
+  }
+  .nav-item:hover .dropdown,
+  .nav-item:focus-within .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-panel {
+    width: 340px;
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    padding: 0.5rem;
+    display: grid;
+    gap: 2px;
+  }
+  .dd-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.62rem 0.65rem;
+    border-radius: 10px;
+    transition: background-color 0.14s ease;
+  }
+  .dd-link:hover {
+    background: var(--slate-050);
+    text-decoration: none;
+  }
+  .dd-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 9px;
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+    flex-shrink: 0;
+  }
+  .dd-copy {
+    min-width: 0;
+  }
+  .dd-label {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.93rem;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .dd-link.active .dd-label {
+    color: var(--blue);
+  }
+  .dd-desc {
+    display: block;
+    font-size: 0.83rem;
+    color: var(--slate-500);
+    line-height: 1.35;
+    margin-top: 1px;
+  }
+  .dd-all {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+    padding: 0.7rem 0.65rem 0.45rem;
+    border-top: 1px solid var(--slate-100);
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--blue);
+  }
+  .dd-all:hover {
+    color: var(--blue-deep);
+    text-decoration: none;
+  }
+  .dd-all :global(svg) {
+    transition: transform 0.16s ease;
+  }
+  .dd-all:hover :global(svg) {
+    transform: translateX(3px);
+  }
+
   .header-cta {
     display: flex;
     align-items: center;
@@ -186,6 +355,31 @@ const isActive = (href: string) =>
     border-bottom: 1px solid var(--slate-100);
   }
   .mobile-link.active {
+    color: var(--blue);
+  }
+  .mobile-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-sublink {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-head);
+    font-size: 0.98rem;
+    color: var(--slate-600);
+    padding: 0.6rem 0.2rem 0.6rem 1.1rem;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .mobile-sublink :global(svg) {
+    color: var(--slate-400);
+    flex-shrink: 0;
+  }
+  .mobile-sublink.active {
+    color: var(--blue);
+    font-weight: 600;
+  }
+  .mobile-sublink.active :global(svg) {
     color: var(--blue);
   }
   .mobile-cta {

@@ -4,6 +4,8 @@ import Icon from './Icon.astro';
 import { SITE, COMPANY, NAV } from '../data/site';
 
 const year = new Date().getFullYear();
+const productLinks = NAV.filter((item) => !('children' in item));
+const solutionLinks = NAV.flatMap((item) => ('children' in item ? item.children : []));
 ---
 
 <footer class="site-footer">
@@ -22,9 +24,15 @@ const year = new Date().getFullYear();
 
       <nav class="footer-col" aria-label="Produkt">
         <h2>Produkt</h2>
-        {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+        {productLinks.map((item) => <a href={item.href}>{item.label}</a>)}
         <a href={SITE.appLogin} rel="noopener">Anmelden</a>
         <a href={SITE.appRegister} rel="noopener">Kostenlos registrieren</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Lösungen">
+        <h2>Lösungen</h2>
+        {solutionLinks.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="/loesungen">Alle Lösungen</a>
       </nav>
 
       <nav class="footer-col" aria-label="Rechtliches">
@@ -68,8 +76,8 @@ const year = new Date().getFullYear();
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
-    gap: 2.5rem;
+    grid-template-columns: 1.5fr 0.9fr 1.2fr 0.9fr 1.2fr;
+    gap: 2.2rem;
   }
 
   .footer-brand p {

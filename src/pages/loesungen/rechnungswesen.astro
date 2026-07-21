@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import FeatureSplit from '../../components/FeatureSplit.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTABand from '../../components/CTABand.astro';
+import MockDashboard from '../../components/mockups/MockDashboard.astro';
+import { SITE } from '../../data/site';
+import { PRICES, formatEuro } from '../../data/pricing';
+
+const title = 'Rechnungen, Angebote & Mahnungen automatisch per Post versenden | versendio';
+const description =
+  'Rechnungs-, Angebots- und Mahnungsversand automatisieren: Buchhaltung, ERP oder Fakturierung per REST-API an versendio anbinden – Dokumente werden automatisch gedruckt, kuvertiert und zugestellt.';
+
+const breadcrumbLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Lösungen', item: `${SITE.url}/loesungen` },
+    { '@type': 'ListItem', position: 3, name: 'Rechnungswesen', item: `${SITE.url}/loesungen/rechnungswesen` },
+  ],
+};
+
+const pipeline = [
+  {
+    icon: 'file-text',
+    title: 'Ihr System erzeugt das Dokument',
+    text: 'Rechnung, Angebot oder Mahnung entsteht wie bisher in Buchhaltung, ERP oder Fakturierung – als ganz normales PDF.',
+  },
+  {
+    icon: 'zap',
+    title: 'Übergabe an versendio',
+    text: 'Automatisch per REST-API oder manuell per PDF-Upload – inklusive Empfänger und Druckoptionen.',
+  },
+  {
+    icon: 'truck',
+    title: 'Druck & Zustellung',
+    text: 'versendio druckt, kuvertiert, frankiert und übergibt an die Zustellung – den Status sehen Sie live im Dashboard.',
+  },
+] as const;
+
+const documents = [
+  {
+    icon: 'euro',
+    title: 'Rechnungen',
+    text: 'Automatisch als Brief zu jedem Rechnungslauf – für Kunden, die Papier bevorzugen oder digital nicht erreichbar sind.',
+  },
+  {
+    icon: 'clock',
+    title: 'Mahnungen & Zahlungserinnerungen',
+    text: 'Ein Brief wird ernster genommen als die dritte E-Mail: Mahnläufe automatisch postalisch nachfassen.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Angebote',
+    text: 'Unterschriftsreif auf Papier beim Entscheider – ohne Drucker, Kuvert und Gang zur Post.',
+  },
+  {
+    icon: 'docs',
+    title: 'Vertrags- & Kundenunterlagen',
+    text: 'Preisanpassungen, AGB-Änderungen oder Verträge – dokumentiert an alle betroffenen Kunden.',
+  },
+] as const;
+
+const faqItems = [
+  {
+    q: 'Welche Systeme kann ich anbinden?',
+    a: 'Grundsätzlich jedes System, das PDFs erzeugt und API-Aufrufe senden kann – ob direkt per REST-API oder über Automatisierungsdienste wie Zapier und Make. Den API-Schlüssel erzeugen Sie in der App unter Einstellungen → Integrationen.',
+  },
+  {
+    q: 'Was kostet der Versand einer Rechnung?',
+    a: `Ein Standardbrief kostet ab ${formatEuro(PRICES.standardLetter)} netto – inklusive Porto, Druck und Kuvertierung, ohne Grundgebühr. Der exakte Preis steht vor jedem Versand fest.`,
+  },
+  {
+    q: 'Sehe ich, ob eine Mahnung zugestellt wurde?',
+    a: 'Ja. Jede Sendung hat einen Live-Status – vom Druck über den Versand bis zur Zustellung –, den Sie jederzeit im Dashboard einsehen. Zusätzlich ist jede Transaktion mit Beleg dokumentiert.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} jsonLd={[breadcrumbLd]}>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHead
+        as="h1"
+        eyebrow="Lösungen · Rechnungswesen"
+        title="Rechnungen & Mahnungen – <em>automatisch per Post</em>"
+        lead="Nicht jede Rechnung darf digital bleiben: Manche Kunden wollen Papier, Mahnungen brauchen Nachdruck. versendio verbindet sich per REST-API mit Ihrem Rechnungswesen und bringt Rechnungen, Angebote und Mahnungen ohne einen Handgriff in den Briefkasten."
+      />
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href={SITE.appRegister} rel="noopener">
+          Kostenlos starten <Icon name="arrow-right" size={19} />
+        </a>
+        <a class="btn btn-secondary btn-lg" href="/preise">Preise ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        eyebrow="So funktioniert die Anbindung"
+        title="Vom Rechnungslauf in den Briefkasten – <em>ohne Handgriff</em>"
+      />
+      <ol class="pipeline">
+        {
+          pipeline.map((p, i) => (
+            <li class="pl-step card">
+              <span class="pl-num">{i + 1}</span>
+              <span class="pl-icon"><Icon name={p.icon} size={24} /></span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+              {i < pipeline.length - 1 && (
+                <span class="pl-arrow" aria-hidden="true">
+                  <Icon name="arrow-right" size={20} />
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <SectionHead
+        eyebrow="Dokumente"
+        title="Was automatisch rausgehen kann"
+        lead="Alles, was Ihr System als PDF erzeugt, kann versendio als Brief zustellen – einzeln oder im Lauf."
+      />
+      <div class="icon-grid">
+        {
+          documents.map((d) => (
+            <div class="icon-card card">
+              <span class="ic"><Icon name={d.icon} size={22} /></span>
+              <h3>{d.title}</h3>
+              <p>{d.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container feature-stack">
+      <FeatureSplit
+        eyebrow="Nachvollziehbarkeit"
+        title="Dokumentiert von der Übergabe bis zur Zustellung"
+        text="Jede Sendung erhält einen Live-Status, jede Transaktion einen Beleg. So bleibt der postalische Versand genauso nachvollziehbar wie der Rest Ihrer Buchhaltung."
+        bullets={[
+          '<strong>Sendungsstatus</strong> je Rechnung und Mahnung live im Dashboard',
+          `<strong>Preis steht vorab fest:</strong> ab ${formatEuro(PRICES.standardLetter)} netto pro Brief`,
+          '<strong>Transaktionsübersicht & Belege</strong> für die Buchhaltung',
+          '<strong>Prepaid-Guthaben</strong> mit automatischer Aufladung – volle Kostenkontrolle',
+        ]}
+        linkHref="/preise"
+        linkLabel="Preise im Detail"
+      >
+        <MockDashboard />
+      </FeatureSplit>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <SectionHead eyebrow="FAQ" title="Häufige Fragen aus der Buchhaltung" />
+      <FAQ items={faqItems} />
+    </div>
+  </section>
+
+  <CTABand
+    title="Der nächste Rechnungslauf geht automatisch zur Post."
+    text="Kostenlos registrieren, API-Schlüssel erzeugen, anbinden – und Rechnungen, Angebote & Mahnungen nie wieder von Hand kuvertieren."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: clamp(3rem, 2rem + 3vw, 5rem) 0 clamp(1rem, 1rem + 1vw, 2rem);
+    background:
+      radial-gradient(700px 420px at 50% -20%, var(--blue-050) 0%, transparent 65%),
+      linear-gradient(180deg, #fdfdff 0%, #ffffff 100%);
+  }
+  .page-hero :global(.section-head) {
+    margin-bottom: 1.8rem;
+  }
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  /* Anbindungs-Pipeline */
+  .pipeline {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    padding: 0;
+    margin: 0;
+  }
+  .pl-step {
+    position: relative;
+    padding: 2rem 1.6rem 1.7rem;
+  }
+  .pl-num {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.5rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--slate-100);
+  }
+  .pl-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+    color: #fff;
+    box-shadow: var(--shadow-blue);
+    margin-bottom: 1.2rem;
+  }
+  .pl-step h3 {
+    margin-bottom: 0.4rem;
+  }
+  .pl-step p {
+    font-size: 0.99rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  .pl-arrow {
+    position: absolute;
+    top: 50%;
+    right: -1.05rem;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 900px) {
+    .pipeline {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+    .pl-arrow {
+      top: auto;
+      bottom: -1.4rem;
+      right: 50%;
+      transform: translateX(50%) rotate(90deg);
+    }
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+  }
+  .icon-card {
+    padding: 1.7rem 1.5rem 1.5rem;
+  }
+  .ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 11px;
+    background: var(--blue-050);
+    border: 1px solid var(--blue-100);
+    color: var(--blue);
+    margin-bottom: 1rem;
+  }
+  .icon-card h3 {
+    font-size: 1.08rem;
+    margin-bottom: 0.35rem;
+  }
+  .icon-card p {
+    font-size: 0.96rem;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  @media (max-width: 980px) {
+    .icon-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .icon-grid { grid-template-columns: 1fr; }
+  }
+
+  .feature-stack {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+import MockShell from './MockShell.astro';
+import Icon from '../Icon.astro';
+
+/**
+ * Mockup des Whitelabel-Moduls: Endkunden-Verwaltung mit
+ * Verbrauchswerten (Briefe & Kosten je Endkunde) – rein in HTML/CSS.
+ */
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+
+const customers = [
+  { name: 'CRM Nova GmbH', api: true, letters: '634', costs: '728,45 €' },
+  { name: 'Praxissoftware Hartmann', api: true, letters: '512', costs: '589,10 €' },
+  { name: 'HandwerkCloud UG', api: false, letters: '405', costs: '466,80 €' },
+];
+---
+
+<MockShell active="whitelabel" class={cls}>
+  <div class="head">
+    <div>
+      <p class="m-h1">Whitelabel</p>
+      <p class="m-sub">Endkunden anlegen, Sendungen zuordnen, Verbrauch je Endkunde abrufen.</p>
+    </div>
+    <span class="m-btn pri"><Icon name="plus" size={12} strokeWidth={2.4} /> Neuer Endkunde</span>
+  </div>
+
+  <div class="stats">
+    <div class="m-card stat">
+      <span class="stat-label"><Icon name="building" size={14} /> Endkunden</span>
+      <span class="stat-value">24</span>
+    </div>
+    <div class="m-card stat">
+      <span class="stat-label"><Icon name="mail" size={14} /> Briefe (Monat)</span>
+      <span class="stat-value">1.842</span>
+    </div>
+    <div class="m-card stat">
+      <span class="stat-label"><Icon name="euro" size={14} /> Kosten (Monat)</span>
+      <span class="stat-value">2.114,60 €</span>
+    </div>
+  </div>
+
+  <div class="m-card list">
+    <div class="row row-head">
+      <span>Endkunde</span>
+      <span class="num">Briefe (Monat)</span>
+      <span class="num">Kosten (Monat)</span>
+    </div>
+    {
+      customers.map((c) => (
+        <div class="row">
+          <span class="name">
+            {c.name}
+            {c.api && <span class="m-badge info">API</span>}
+          </span>
+          <span class="num">{c.letters}</span>
+          <span class="num strong">{c.costs}</span>
+        </div>
+      ))
+    }
+    <div class="row row-more">… 21 weitere Endkunden</div>
+  </div>
+</MockShell>
+
+<style>
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1em;
+  }
+  .head :global(.m-sub) {
+    margin-bottom: 1.2em;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    margin-bottom: 1.2em;
+  }
+  .stat {
+    padding: 1.1em 1.2em;
+  }
+  .stat-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.9em;
+    color: var(--slate-500);
+  }
+  .stat-label :global(svg) {
+    width: 1.2em;
+    height: 1.2em;
+  }
+  .stat-value {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.7em;
+    color: var(--ink);
+    margin-top: 0.35em;
+    letter-spacing: -0.01em;
+  }
+
+  .list {
+    padding: 0.5em 1.2em 0.6em;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 2.4fr) 1fr 1fr;
+    align-items: center;
+    gap: 1em;
+    padding: 0.7em 0;
+    border-top: 1px solid var(--slate-100);
+    font-size: 0.95em;
+  }
+  .row:first-child {
+    border-top: none;
+  }
+  .row-head {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--slate-400);
+  }
+  .name {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    color: var(--ink);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .num {
+    text-align: right;
+    color: var(--slate-600);
+    white-space: nowrap;
+  }
+  .num.strong {
+    color: var(--ink);
+    font-family: var(--font-head);
+    font-weight: 600;
+  }
+  .row-more {
+    display: block;
+    text-align: center;
+    font-size: 0.85em;
+    color: var(--slate-400);
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+/**
+ * REST-API-Codebeispiel als dunkles Code-Fenster – rein in HTML/CSS.
+ * Zeigt den echten Kontakt-Endpoint aus der API-Dokumentation der App.
+ */
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+
+// Als String aufgebaut, damit die JSON-Klammern nicht als
+// Astro-Expressions interpretiert werden.
+const code = [
+  '<span class="c"># Basis-URL: https://app.versendio.de/api/v1</span>',
+  '<span class="k">curl</span> -X POST https://app.versendio.de/api/v1/contacts \\',
+  '  -H <span class="s">"Authorization: Bearer vk_live_…"</span> \\',
+  '  -H <span class="s">"Content-Type: application/json"</span> \\',
+  "  -d '{",
+  '    <span class="p">"salutation"</span>: <span class="s">"Frau"</span>,',
+  '    <span class="p">"firstName"</span>: <span class="s">"Erika"</span>,',
+  '    <span class="p">"lastName"</span>: <span class="s">"Mustermann"</span>,',
+  '    <span class="p">"company"</span>: <span class="s">"Muster GmbH"</span>,',
+  '    <span class="p">"street"</span>: <span class="s">"Musterstraße 12"</span>,',
+  '    <span class="p">"zip"</span>: <span class="s">"10115"</span>,',
+  '    <span class="p">"city"</span>: <span class="s">"Berlin"</span>,',
+  '    <span class="p">"country"</span>: <span class="s">"DE"</span>',
+  "  }'",
+].join('\n');
+---
+
+<div class:list={['api-mock', cls]} role="img" aria-label="Beispiel eines REST-API-Aufrufs an versendio">
+  <div class="win">
+    <div class="win-bar">
+      <span class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></span>
+      <span class="win-title">REST-API · Kontakt anlegen</span>
+      <span class="bar-spacer"></span>
+    </div>
+    <pre class="code"><code set:html={code} /></pre>
+    <div class="resp">
+      <span class="ok-dot"></span>
+      <span><b>201 Created</b> · Kontakt angelegt – bereit für Brief &amp; Flow</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .api-mock {
+    container-type: inline-size;
+    width: 100%;
+  }
+
+  .win {
+    background: linear-gradient(180deg, #131b45 0%, #0c1230 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.06),
+      0 24px 60px -18px rgba(16, 24, 40, 0.38);
+    overflow: hidden;
+  }
+
+  .win-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.7em 1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: clamp(7px, 1.4cqw, 13px);
+  }
+  .dots {
+    display: flex;
+    gap: 0.5em;
+  }
+  .dots i {
+    width: 0.85em;
+    height: 0.85em;
+    border-radius: 50%;
+  }
+  .d1 { background: #fc5f57; }
+  .d2 { background: #febc2e; }
+  .d3 { background: #28c840; }
+  .win-title {
+    font-family: var(--font-head);
+    font-size: 0.95em;
+    color: #8d97c2;
+    white-space: nowrap;
+  }
+
+  .code {
+    margin: 0;
+    padding: 1.4em 1.5em;
+    overflow-x: auto;
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: clamp(8.5px, 1.6cqw, 13.5px);
+    line-height: 1.6;
+    color: #c9d3f5;
+  }
+  .code :global(.c) { color: #6f79a8; }
+  .code :global(.k) { color: #8ab4ff; font-weight: 700; }
+  .code :global(.s) { color: #93e0b8; }
+  .code :global(.p) { color: #b7c6ff; }
+
+  .resp {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.8em 1.5em;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: clamp(8px, 1.5cqw, 13px);
+    color: #aab3d6;
+  }
+  .resp b {
+    color: #7ee2ab;
+    font-family: var(--font-head);
+    font-weight: 600;
+  }
+  .ok-dot {
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 50%;
+    background: #28c840;
+    flex-shrink: 0;
+  }
+</style>

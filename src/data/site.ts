@@ -29,9 +29,42 @@ export const COMPANY = {
 
 export const NAV = [
   { label: 'Funktionen', href: '/funktionen' },
+  {
+    label: 'Lösungen',
+    href: '/loesungen',
+    children: [
+      {
+        label: 'Agenturen',
+        href: '/loesungen/agenturen',
+        icon: 'sparkles',
+        description: 'Onboarding, Weiterempfehlung & Kundenpost automatisieren',
+      },
+      {
+        label: 'Vertrieb & Sales',
+        href: '/loesungen/vertrieb',
+        icon: 'chart',
+        description: 'Adresslisten anschreiben, nachfassen, Zustellung im Blick',
+      },
+      {
+        label: 'Rechnungswesen',
+        href: '/loesungen/rechnungswesen',
+        icon: 'euro',
+        description: 'Rechnungen, Angebote & Mahnungen automatisch per Post',
+      },
+      {
+        label: 'Software-Anbieter & SaaS',
+        href: '/loesungen/software-anbieter',
+        icon: 'zap',
+        description: 'White Label: Briefversand per API in Ihrer Software',
+      },
+    ],
+  },
   { label: 'Preise', href: '/preise' },
   { label: 'Blog', href: '/blog' },
 ] as const;
+
+export type NavItem = (typeof NAV)[number];
+export type NavChild = Extract<NavItem, { children: unknown }>['children'][number];
 
 /**
  * Ankündigungs-Banner oben auf der Website.
