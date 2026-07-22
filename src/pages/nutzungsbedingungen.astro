@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, COMPANY } from '../data/site';
+
+const title = 'Nutzungsbedingungen | versendio';
+const description =
+  'Nutzungsbedingungen für die versendio-Web-Anwendung – Regeln für Konto, Anmeldung und Nutzung der Plattform der Novax Digital GmbH.';
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="legal-hero">
+    <div class="container-narrow">
+      <h1>Nutzungsbedingungen</h1>
+    </div>
+  </section>
+
+  <section class="section legal-body">
+    <div class="container-narrow prose">
+      <p><em>Stand: Juli 2026</em></p>
+
+      <h2>1. Geltungsbereich und Anbieter</h2>
+      <p>
+        (1) Diese Nutzungsbedingungen regeln die Nutzung der Web-Anwendung
+        <strong>versendio</strong> (erreichbar unter versendio.de und
+        app.versendio.de, nachfolgend „Anwendung“), die von der
+        {COMPANY.name}, {COMPANY.street}, {COMPANY.zip} {COMPANY.city}
+        (nachfolgend „Anbieter“) bereitgestellt wird.
+      </p>
+      <p>
+        (2) Für entgeltliche Leistungen (insbesondere Druck, Kuvertierung,
+        Frankierung und Versand von Briefsendungen) gelten ergänzend die
+        <a href="/agb">Allgemeinen Geschäftsbedingungen (AGB)</a>. Bei
+        Widersprüchen zwischen diesen Nutzungsbedingungen und den AGB gehen
+        die AGB in Bezug auf die entgeltlichen Leistungen vor. Informationen
+        zur Verarbeitung personenbezogener Daten enthält unsere
+        <a href="/datenschutz">Datenschutzerklärung</a>.
+      </p>
+
+      <h2>2. Leistungsbeschreibung</h2>
+      <p>
+        Die Anwendung ermöglicht es Nutzern, Dokumente hochzuladen oder im
+        Editor zu erstellen und als physische Briefpost versenden zu lassen.
+        Der Funktionsumfang ergibt sich aus der jeweils in der Anwendung
+        verfügbaren Ausgestaltung; der Anbieter darf den Funktionsumfang
+        weiterentwickeln und anpassen.
+      </p>
+
+      <h2>3. Konto und Anmeldung</h2>
+      <p>
+        (1) Die Nutzung der Anwendung setzt ein Nutzerkonto voraus. Die
+        Registrierung ist kostenlos. Sie können sich mit E-Mail-Adresse und
+        Passwort registrieren oder alternativ über einen Single-Sign-On-Dienst
+        (Anmeldung mit einem bestehenden Google- oder Microsoft-Konto)
+        anmelden.
+      </p>
+      <p>
+        (2) Sie sind verpflichtet, bei der Registrierung wahrheitsgemäße und
+        vollständige Angaben zu machen und diese aktuell zu halten.
+      </p>
+      <p>
+        (3) Zugangsdaten sind vertraulich zu behandeln und vor dem Zugriff
+        Dritter zu schützen. Bei Verdacht auf einen Missbrauch Ihres Kontos
+        informieren Sie uns bitte unverzüglich unter
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Nutzen Sie den
+        Single-Sign-On, gelten für das verknüpfte Google- bzw. Microsoft-Konto
+        zusätzlich die Bedingungen des jeweiligen Anbieters.
+      </p>
+
+      <h2>4. Zulässige Nutzung</h2>
+      <p>
+        (1) Die Anwendung darf nur im Rahmen der geltenden Gesetze und dieser
+        Nutzungsbedingungen verwendet werden. Sie sind für die Inhalte der von
+        Ihnen beauftragten Sendungen sowie für die Richtigkeit der
+        Empfängerdaten selbst verantwortlich.
+      </p>
+      <p>
+        (2) Unzulässig sind insbesondere rechtswidrige, beleidigende oder
+        jugendgefährdende Inhalte, die Verletzung von Rechten Dritter sowie
+        unzumutbare Belästigungen im Sinne des § 7 UWG. Ergänzend gelten die
+        Pflichten aus § 5 der <a href="/agb">AGB</a>.
+      </p>
+      <p>
+        (3) Sie dürfen die Anwendung nicht in einer Weise nutzen, die deren
+        Betrieb, Sicherheit oder Verfügbarkeit beeinträchtigt (z.&nbsp;B. durch
+        automatisierte Massenzugriffe außerhalb bereitgestellter
+        Schnittstellen, Umgehung von Sicherheitsmaßnahmen oder Einschleusen von
+        Schadsoftware).
+      </p>
+
+      <h2>5. Rechte an Inhalten</h2>
+      <p>
+        Sie behalten sämtliche Rechte an den von Ihnen hochgeladenen oder
+        erstellten Inhalten. Sie räumen dem Anbieter das für die Erbringung der
+        Leistung erforderliche, einfache Recht ein, diese Inhalte zu speichern,
+        zu verarbeiten und zum Zweck der Produktion und des Versands der
+        Sendungen zu nutzen.
+      </p>
+
+      <h2>6. Verfügbarkeit</h2>
+      <p>
+        Der Anbieter bemüht sich um eine möglichst unterbrechungsfreie
+        Verfügbarkeit der Anwendung. Wartungsarbeiten, Weiterentwicklungen oder
+        Störungen können die Verfügbarkeit vorübergehend einschränken; ein
+        Anspruch auf ununterbrochene Verfügbarkeit besteht nicht.
+      </p>
+
+      <h2>7. Sperrung und Beendigung</h2>
+      <p>
+        (1) Sie können Ihr Nutzerkonto jederzeit beenden. Der Anbieter kann den
+        Zugang zur Anwendung sperren oder das Nutzungsverhältnis beenden, wenn
+        Sie in erheblicher Weise oder wiederholt gegen diese
+        Nutzungsbedingungen oder die AGB verstoßen.
+      </p>
+      <p>
+        (2) Die Regelungen der <a href="/agb">AGB</a> zu Laufzeit, Kündigung
+        und zur Erstattung von Guthaben bleiben unberührt.
+      </p>
+
+      <h2>8. Haftung</h2>
+      <p>
+        Für die Haftung des Anbieters gelten die Regelungen in § 9 der
+        <a href="/agb">AGB</a> entsprechend.
+      </p>
+
+      <h2>9. Änderungen dieser Nutzungsbedingungen</h2>
+      <p>
+        Der Anbieter kann diese Nutzungsbedingungen mit Wirkung für die Zukunft
+        ändern, soweit dies aus triftigen Gründen (insbesondere Änderungen der
+        Rechtslage oder der Funktionen der Anwendung) erforderlich ist und Sie
+        nicht unangemessen benachteiligt werden. Es gilt jeweils die hier
+        veröffentlichte aktuelle Fassung.
+      </p>
+
+      <h2>10. Anwendbares Recht und Kontakt</h2>
+      <p>
+        (1) Es gilt das Recht der Bundesrepublik Deutschland. Gegenüber
+        Verbrauchern gilt diese Rechtswahl nur, soweit ihnen dadurch nicht der
+        Schutz zwingender Bestimmungen ihres Aufenthaltsstaats entzogen wird.
+      </p>
+      <p>
+        (2) Bei Fragen zu diesen Nutzungsbedingungen erreichen Sie uns unter
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> oder telefonisch
+        unter <a href={SITE.phoneHref}>{SITE.phone}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
