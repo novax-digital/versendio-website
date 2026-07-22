@@ -1,0 +1,201 @@
+---
+// Cookie-Consent-Banner (Eigenbau, kein CMP-Drittanbieter).
+// Steuert das einwilligungsbasierte Laden von Google Ads über src/lib/consent.ts.
+//
+// TODO(juristisch prüfen lassen): Sämtliche Banner-Texte rechtlich verifizieren.
+const TEXT = {
+  title: 'Cookies für Conversion-Tracking',
+  body: 'Mit deiner Einwilligung nutzen wir Google Ads Conversion-Tracking, um die Wirksamkeit unserer Werbung zu messen. Dabei können personenbezogene Daten in die USA übermittelt werden. Ohne Einwilligung wird nichts geladen und es werden keine Cookies gesetzt.',
+  accept: 'Akzeptieren',
+  deny: 'Ablehnen',
+  moreLabel: 'Mehr in der Datenschutzerklärung',
+  moreHref: '/datenschutz',
+};
+---
+
+<div
+  id="cookie-consent"
+  class="cc"
+  role="dialog"
+  aria-label="Einwilligung in Cookies für Conversion-Tracking"
+  aria-live="polite"
+  tabindex="-1"
+  hidden
+>
+  <div class="cc-inner">
+    <div class="cc-copy">
+      <p class="cc-title">{TEXT.title}</p>
+      <p class="cc-body">
+        {TEXT.body} <a href={TEXT.moreHref}>{TEXT.moreLabel}</a>
+      </p>
+    </div>
+    <div class="cc-actions">
+      <button type="button" class="cc-btn cc-deny" data-consent-deny>
+        {TEXT.deny}
+      </button>
+      <button type="button" class="cc-btn cc-accept" data-consent-accept>
+        {TEXT.accept}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import {
+    initConsent,
+    shouldShowBanner,
+    grantConsent,
+    denyConsent,
+  } from '../lib/consent';
+
+  const banner = document.getElementById('cookie-consent');
+
+  if (banner) {
+    let lastFocus: HTMLElement | null = null;
+
+    const show = () => {
+      lastFocus = document.activeElement as HTMLElement | null;
+      banner.hidden = false;
+      requestAnimationFrame(() => banner.classList.add('is-visible'));
+      banner.focus();
+    };
+
+    const hide = () => {
+      banner.classList.remove('is-visible');
+      window.setTimeout(() => {
+        banner.hidden = true;
+      }, 250);
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    };
+
+    // Bestehende Einwilligung anwenden (lädt ggf. das Tag – ohne Banner).
+    initConsent();
+    if (shouldShowBanner()) show();
+
+    banner
+      .querySelector('[data-consent-accept]')
+      ?.addEventListener('click', () => {
+        grantConsent();
+        hide();
+      });
+
+    banner
+      .querySelector('[data-consent-deny]')
+      ?.addEventListener('click', () => {
+        denyConsent();
+        hide();
+      });
+
+    // Widerruf / erneutes Öffnen über „Cookie-Einstellungen“ (z. B. Footer).
+    document.querySelectorAll('[data-cookie-settings]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        show();
+      });
+    });
+  }
+</script>
+
+<style>
+  /* Fixe Overlay-Leiste: reserviert keinen Platz im Dokumentfluss
+     -> kein Layout-Shift. */
+  .cc {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 400;
+    background: var(--white);
+    border-top: 1px solid var(--slate-200);
+    box-shadow: 0 -6px 28px rgba(16, 24, 40, 0.14);
+    transform: translateY(110%);
+    transition: transform 0.28s ease;
+  }
+  .cc.is-visible {
+    transform: none;
+  }
+  .cc:focus {
+    outline: none;
+  }
+
+  .cc-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 1rem clamp(1rem, 4vw, 2rem);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cc-copy {
+    flex: 1 1 auto;
+  }
+  .cc-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin: 0 0 0.2rem;
+  }
+  .cc-body {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--slate-600);
+    margin: 0;
+    max-width: 72ch;
+  }
+  .cc-body a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+  }
+
+  .cc-actions {
+    display: flex;
+    gap: 0.6rem;
+    flex: 0 0 auto;
+  }
+  /* Beide Buttons gleich groß und gleich kontrastreich – kein Dark Pattern. */
+  .cc-btn {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.62rem 1.5rem;
+    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    min-width: 136px;
+    transition: background 0.15s ease;
+  }
+  .cc-accept {
+    background: #2c4be8;
+    color: #fff;
+  }
+  .cc-accept:hover {
+    background: var(--blue-hover);
+  }
+  .cc-deny {
+    background: var(--ink);
+    color: #fff;
+  }
+  .cc-deny:hover {
+    background: #000;
+  }
+  .cc-btn:focus-visible {
+    outline: 3px solid var(--blue-200);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 720px) {
+    .cc-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.9rem;
+    }
+    .cc-btn {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+</style>

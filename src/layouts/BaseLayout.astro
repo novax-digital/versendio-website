@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Banner from '../components/Banner.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import { SITE, COMPANY } from '../data/site';
 
 interface Props {
@@ -77,6 +78,24 @@ const graph = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Consent Mode – Standard: alles verweigert. Marketing-Tags
+         werden ausschließlich nach Einwilligung geladen (src/lib/consent.ts).
+         Muss vor allen weiteren Skripten stehen. -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      });
+    </script>
+
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -152,6 +171,7 @@ const graph = {
       <slot />
     </main>
     <Footer />
+    <CookieBanner />
   </body>
 </html>
 
