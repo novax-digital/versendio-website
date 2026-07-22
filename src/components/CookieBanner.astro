@@ -1,14 +1,24 @@
 ---
+import Icon from './Icon.astro';
 // Cookie-Consent-Banner (Eigenbau, kein CMP-Drittanbieter).
 // Steuert das einwilligungsbasierte Laden von Google Ads über src/lib/consent.ts.
 //
 // TODO(juristisch prüfen lassen): Sämtliche Banner-Texte rechtlich verifizieren.
 const TEXT = {
-  title: 'Datenschutz-Einstellungen',
-  body: 'Mit deiner Einwilligung nutzen wir Google Ads Conversion-Tracking, um die Wirksamkeit unserer Werbung zu messen. Dabei können personenbezogene Daten in die USA übermittelt werden. Ohne Einwilligung wird nichts geladen und es werden keine Cookies gesetzt.',
-  accept: 'Akzeptieren',
-  deny: 'Ablehnen',
-  moreLabel: 'Mehr in der Datenschutzerklärung',
+  title: 'Cookie-Einstellungen',
+  body: 'Wir verwenden Cookies, um dir die bestmögliche Erfahrung auf unserer Website zu bieten. Einige Cookies sind für den Betrieb der Website notwendig, während andere uns helfen, unser Angebot und unsere Werbung zu verbessern.',
+  deny: 'Nur notwendige',
+  settings: 'Einstellungen',
+  save: 'Auswahl speichern',
+  accept: 'Alle akzeptieren',
+  necessaryTitle: 'Notwendige Cookies',
+  necessaryDesc:
+    'Für den technischen Betrieb der Website erforderlich (z. B. das Speichern deiner Cookie-Auswahl). Ohne Einwilligung aktiv.',
+  marketingTitle: 'Marketing',
+  marketingDesc:
+    'Conversion-Tracking (Google Ads) zur Messung der Wirksamkeit unserer Werbung. Dabei können Daten in die USA übermittelt werden.',
+  moreLead: 'Mehr erfährst du in unserer',
+  moreLink: 'Datenschutzerklärung',
   moreHref: '/datenschutz',
 };
 ---
@@ -17,26 +27,74 @@ const TEXT = {
   id="cookie-consent"
   class="cc"
   role="dialog"
-  aria-label="Einwilligung in Cookies für Conversion-Tracking"
-  aria-live="polite"
+  aria-modal="false"
+  aria-labelledby="cc-title"
+  aria-describedby="cc-desc"
   tabindex="-1"
   hidden
 >
-  <div class="cc-inner">
-    <div class="cc-copy">
-      <p class="cc-title">{TEXT.title}</p>
-      <p class="cc-body">
-        {TEXT.body} <a href={TEXT.moreHref}>{TEXT.moreLabel}</a>
-      </p>
+  <div class="cc-card">
+    <button
+      type="button"
+      class="cc-close"
+      data-consent-deny
+      aria-label="Schließen – nur notwendige Cookies verwenden"
+    >
+      <Icon name="x" size={18} strokeWidth={2.2} />
+    </button>
+
+    <div class="cc-head">
+      <span class="cc-icon" aria-hidden="true">🍪</span>
+      <h2 id="cc-title" class="cc-title">{TEXT.title}</h2>
     </div>
+
+    <p id="cc-desc" class="cc-body">{TEXT.body}</p>
+
+    <div class="cc-settings" id="cc-settings" hidden>
+      <div class="cc-cat">
+        <div class="cc-cat-info">
+          <p class="cc-cat-name">{TEXT.necessaryTitle}</p>
+          <p class="cc-cat-desc">{TEXT.necessaryDesc}</p>
+        </div>
+        <span class="cc-always">Immer aktiv</span>
+      </div>
+      <div class="cc-cat">
+        <div class="cc-cat-info">
+          <p class="cc-cat-name">{TEXT.marketingTitle}</p>
+          <p class="cc-cat-desc">{TEXT.marketingDesc}</p>
+        </div>
+        <label class="cc-switch">
+          <input type="checkbox" id="cc-marketing" />
+          <span class="cc-slider" aria-hidden="true"></span>
+          <span class="cc-sr">Marketing-Cookies erlauben</span>
+        </label>
+      </div>
+    </div>
+
     <div class="cc-actions">
-      <button type="button" class="cc-btn cc-deny" data-consent-deny>
+      <button type="button" class="cc-btn cc-ghost" data-consent-deny>
         {TEXT.deny}
       </button>
-      <button type="button" class="cc-btn cc-accept" data-consent-accept>
+      <button
+        type="button"
+        class="cc-btn cc-ghost"
+        data-consent-settings
+        aria-expanded="false"
+        aria-controls="cc-settings"
+      >
+        {TEXT.settings}
+      </button>
+      <button type="button" class="cc-btn cc-ghost" data-consent-save hidden>
+        {TEXT.save}
+      </button>
+      <button type="button" class="cc-btn cc-primary" data-consent-accept>
         {TEXT.accept}
       </button>
     </div>
+
+    <p class="cc-more">
+      {TEXT.moreLead} <a href={TEXT.moreHref}>{TEXT.moreLink}</a>.
+    </p>
   </div>
 </div>
 
@@ -46,15 +104,33 @@ const TEXT = {
     shouldShowBanner,
     grantConsent,
     denyConsent,
+    readConsent,
   } from '../lib/consent';
 
   const banner = document.getElementById('cookie-consent');
 
   if (banner) {
+    const panel = banner.querySelector<HTMLElement>('#cc-settings');
+    const settingsBtn = banner.querySelector<HTMLElement>('[data-consent-settings]');
+    const saveBtn = banner.querySelector<HTMLElement>('[data-consent-save]');
+    const marketing = banner.querySelector<HTMLInputElement>('#cc-marketing');
     let lastFocus: HTMLElement | null = null;
+
+    // Ansicht auf den Ruhezustand zurücksetzen (Panel zu, Toggle = aktueller Stand).
+    const resetView = () => {
+      if (panel) panel.hidden = true;
+      if (settingsBtn) {
+        settingsBtn.hidden = false;
+        settingsBtn.setAttribute('aria-expanded', 'false');
+      }
+      if (saveBtn) saveBtn.hidden = true;
+      const c = readConsent();
+      if (marketing) marketing.checked = !!(c && c.marketing);
+    };
 
     const show = () => {
       lastFocus = document.activeElement as HTMLElement | null;
+      resetView();
       banner.hidden = false;
       requestAnimationFrame(() => banner.classList.add('is-visible'));
       banner.focus();
@@ -72,6 +148,15 @@ const TEXT = {
     initConsent();
     if (shouldShowBanner()) show();
 
+    // „Nur notwendige“ + Schließen-X → ablehnen.
+    banner.querySelectorAll('[data-consent-deny]').forEach((el) =>
+      el.addEventListener('click', () => {
+        denyConsent();
+        hide();
+      }),
+    );
+
+    // „Alle akzeptieren“.
     banner
       .querySelector('[data-consent-accept]')
       ?.addEventListener('click', () => {
@@ -79,12 +164,20 @@ const TEXT = {
         hide();
       });
 
-    banner
-      .querySelector('[data-consent-deny]')
-      ?.addEventListener('click', () => {
-        denyConsent();
-        hide();
-      });
+    // „Einstellungen“ → Kategorien aufklappen, Button wird zu „Auswahl speichern“.
+    settingsBtn?.addEventListener('click', () => {
+      if (panel) panel.hidden = false;
+      settingsBtn.hidden = true;
+      settingsBtn.setAttribute('aria-expanded', 'true');
+      if (saveBtn) saveBtn.hidden = false;
+    });
+
+    // „Auswahl speichern“ → Toggle-Stand anwenden.
+    saveBtn?.addEventListener('click', () => {
+      if (marketing && marketing.checked) grantConsent();
+      else denyConsent();
+      hide();
+    });
 
     // Widerruf / erneutes Öffnen über „Cookie-Einstellungen“ (z. B. Footer).
     document.querySelectorAll('[data-cookie-settings]').forEach((el) => {
@@ -97,105 +190,234 @@ const TEXT = {
 </script>
 
 <style>
-  /* Fixe Overlay-Leiste: reserviert keinen Platz im Dokumentfluss
-     -> kein Layout-Shift. */
+  /* Zentrierte Floating-Card: fixes Overlay, reserviert keinen Platz im
+     Dokumentfluss -> kein Layout-Shift. Kein Scrim -> Seite bleibt nutzbar. */
   .cc {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: 50%;
+    bottom: clamp(1rem, 4vw, 2rem);
     z-index: 400;
-    background: var(--white);
-    border-top: 1px solid var(--slate-200);
-    box-shadow: 0 -6px 28px rgba(16, 24, 40, 0.14);
-    transform: translateY(110%);
-    transition: transform 0.28s ease;
+    width: min(640px, calc(100vw - 2rem));
+    transform: translateX(-50%) translateY(16px);
+    opacity: 0;
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s ease;
+    pointer-events: none;
   }
   .cc.is-visible {
-    transform: none;
+    transform: translateX(-50%);
+    opacity: 1;
+    pointer-events: auto;
   }
   .cc:focus {
     outline: none;
   }
 
-  .cc-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 1rem clamp(1rem, 4vw, 2rem);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+  .cc-card {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--r-xl);
+    box-shadow:
+      0 20px 48px rgba(16, 24, 40, 0.2),
+      0 4px 12px rgba(16, 24, 40, 0.08);
+    padding: clamp(1.25rem, 3vw, 1.75rem);
   }
 
-  .cc-copy {
-    flex: 1 1 auto;
+  .cc-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: inline-flex;
+    padding: 0.35rem;
+    border: none;
+    background: transparent;
+    color: var(--slate-400);
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    line-height: 0;
+  }
+  .cc-close:hover {
+    color: var(--slate-600);
+    background: var(--slate-100);
+  }
+
+  .cc-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.65rem;
+    padding-right: 2rem;
+  }
+  .cc-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--slate-100);
+    border-radius: var(--r-md);
+    font-size: 1.35rem;
   }
   .cc-title {
     font-family: var(--font-head);
     font-weight: 600;
-    font-size: 0.98rem;
+    font-size: 1.15rem;
     color: var(--ink);
-    margin: 0 0 0.2rem;
-  }
-  .cc-body {
-    font-size: 0.88rem;
-    line-height: 1.5;
-    color: var(--slate-600);
     margin: 0;
-    max-width: 72ch;
-  }
-  .cc-body a {
-    color: var(--blue);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    white-space: nowrap;
   }
 
-  .cc-actions {
-    display: flex;
-    gap: 0.6rem;
-    flex: 0 0 auto;
+  .cc-body {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--slate-600);
+    margin: 0 0 1.1rem;
   }
-  /* Beide Buttons gleich groß und gleich kontrastreich – kein Dark Pattern. */
-  .cc-btn {
+
+  /* Kategorien (Einstellungen) */
+  .cc-settings {
+    margin: 0 0 1.1rem;
+    border-top: 1px solid var(--slate-200);
+  }
+  .cc-cat {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--slate-100);
+  }
+  .cc-cat-info {
+    flex: 1;
+  }
+  .cc-cat-name {
     font-family: var(--font-head);
     font-weight: 600;
     font-size: 0.9rem;
-    padding: 0.62rem 1.5rem;
-    border-radius: var(--r-sm);
-    border: 1px solid transparent;
+    color: var(--ink);
+    margin: 0 0 0.15rem;
+  }
+  .cc-cat-desc {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--slate-500);
+    margin: 0;
+  }
+  .cc-always {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--green-600);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  /* Toggle-Switch */
+  .cc-switch {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
     cursor: pointer;
-    min-width: 136px;
+  }
+  .cc-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .cc-slider {
+    position: relative;
+    width: 42px;
+    height: 24px;
+    background: var(--slate-300);
+    border-radius: 999px;
     transition: background 0.15s ease;
   }
-  .cc-accept {
+  .cc-slider::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s ease;
+  }
+  .cc-switch input:checked + .cc-slider {
+    background: #2c4be8;
+  }
+  .cc-switch input:checked + .cc-slider::after {
+    transform: translateX(18px);
+  }
+  .cc-switch input:focus-visible + .cc-slider {
+    outline: 3px solid var(--blue-200);
+    outline-offset: 2px;
+  }
+  .cc-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  /* Aktionen */
+  .cc-actions {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .cc-btn {
+    flex: 1;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.7rem 1.05rem;
+    border-radius: var(--r-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .cc-ghost {
+    background: var(--white);
+    color: var(--slate-700);
+    border-color: var(--slate-300);
+  }
+  .cc-ghost:hover {
+    background: var(--slate-050);
+    border-color: var(--slate-400);
+  }
+  .cc-primary {
     background: #2c4be8;
     color: #fff;
   }
-  .cc-accept:hover {
+  .cc-primary:hover {
     background: var(--blue-hover);
-  }
-  .cc-deny {
-    background: var(--ink);
-    color: #fff;
-  }
-  .cc-deny:hover {
-    background: #000;
   }
   .cc-btn:focus-visible {
     outline: 3px solid var(--blue-200);
     outline-offset: 2px;
   }
 
-  @media (max-width: 720px) {
-    .cc-inner {
+  .cc-more {
+    font-size: 0.82rem;
+    color: var(--slate-500);
+    margin: 0.9rem 0 0;
+    text-align: center;
+  }
+  .cc-more a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 560px) {
+    .cc-actions {
       flex-direction: column;
-      align-items: stretch;
-      gap: 0.9rem;
-    }
-    .cc-btn {
-      flex: 1;
-      min-width: 0;
     }
   }
 </style>
